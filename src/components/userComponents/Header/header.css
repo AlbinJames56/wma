@@ -1,0 +1,22 @@
+/* Header Gradient Update */
+.navbody {
+  background: rgb(8,47,95);
+  background: linear-gradient(0deg, rgba(8,47,95,0.01) 3%, rgba(8,47,95,0.583158263305322) 10%, rgba(8,36,95,1) 17%, rgba(8,47,95,1) 70%);
+  color: rgba(255, 255, 255, 0);
+  font-family: "Spicy Rice", serif; /* You can use a different font like in the image */
+  height: 80px;
+}
+
+.Nav.Link {
+  color: rgb(255, 255, 255);
+  transition: color 0.3s ease-in-out;
+}
+ 
+.hamburger-icon {
+  font-size: 24px; /* Adjust the size as needed */
+  color: black; /* Change the color of the icon */
+  background-color: white; /* Background of the button */
+  padding: 5px; /* Adds space around the icon */
+  border-radius: 5px; /* Rounds the edges */
+  margin-top: -15px;
+}

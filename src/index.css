@@ -1,5 +1,10 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
+/* @import "~react-image-gallery/styles/css/image-gallery.css"; */
 body{
     /* background: rgb(2, 30, 132);
     background: linear-gradient(40deg, rgba(0, 20, 235, 0.266) 0%, rgb(0, 21, 255) 47%, rgba(11, 96, 255, 0.33) 100%); */
 }
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Spicy Rice', cursive;
+    color: white;
+  }

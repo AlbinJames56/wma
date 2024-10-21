@@ -1,0 +1,89 @@
+.footer { 
+    width: 100%;
+    padding: 10px;
+     
+    background-image: linear-gradient(
+      to bottom, 
+      rgba(2, 41, 88, 0.984), /* Adjust opacity as needed for smooth blending */
+      rgba(11, 61, 168, 0.339)
+  ), url('../../../assets/boat.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: "Quicksand", sans-serif;
+    /* color: #ffffff; */
+    color: rgb(255, 255, 255);
+    box-shadow: 0px -5px 10px 0px rgba(0, 0, 0, 0.1)
+  }
+  .social img{
+    width: 30px;
+    
+  } 
+  .footer_container {
+    max-width: 900px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+  }
+  
+  .footer_section {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+  
+  }
+  
+  .location {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.8rem;
+  }
+  
+  .location a {
+    text-decoration: none;
+    color: antiquewhite;
+    text-shadow: 3px 4px 4px black; /* Adjust the shadow values as needed */
+  }
+  
+  .location p {
+    color: antiquewhite;
+    text-shadow: 2px 2px 3px black; /* Adding shadow to the <p> elements */
+    margin: 0;
+  }
+  .social {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-evenly;
+  }
+  .copyright{
+    color: dimgray;
+    display: flex;
+    justify-content: center;
+  }
+  h4 {
+    font-size: 20px;
+    padding-bottom: 0.7rem;
+  }
+  
+  a {
+    /* color: #ffffff; */
+    color: black;
+    text-decoration: none;
+  }
+  
+  @media screen and (max-width: 640px) {
+    .footer_container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .footer_section {
+      margin-bottom: 20px;
+    }
+  
+    .footer_section:last-child {
+      margin-bottom: 0;
+    }
+  }
+  

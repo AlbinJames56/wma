@@ -1,0 +1,13 @@
+.banner {
+  background: rgb(8,47,95);
+    background-image:linear-gradient(180deg, rgba(8,47,95,0.01) 0%, rgb(2, 34, 73) 0%, rgb(3, 25, 59) 7%, rgba(8,42,95,0) 17%), url('../../../assets/kerla-ai.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 900px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+     
+  }

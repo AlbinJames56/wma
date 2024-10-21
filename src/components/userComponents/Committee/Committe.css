@@ -1,0 +1,28 @@
+.commitee_container {
+    width: 150px;
+    height: 250px;
+    overflow: hidden;
+    transition: 0.3s;
+  }
+  
+  .commitee_container:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  .po_name {
+    font-size: small;
+    color: rgb(110, 110, 110);
+  }
+  
+  @media screen and (max-width: 768px) {
+    .commitee_container {
+      width: 130px;
+      height: 210px;
+    }
+  
+    .p_name,
+    .po_name {
+      font-size: small;
+    }
+  }
+  

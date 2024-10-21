@@ -1,11 +1,11 @@
 import React from "react";
-import Events from "./Events";
-import Banner from "../../components/userComponents/Banner";
-import About from "../../components/userComponents/About";
-import MembershipForm from "../../components/userComponents/MembershipForm";
-import Contact from "../../components/userComponents/Contact";
+import Events from "./Events/Events";
+import Banner from "../../components/userComponents/Banner/Banner";
+import About from "../../components/userComponents/About/About";
+import MembershipForm from "../../components/userComponents/Membership/MembershipForm";
+import Contact from "../../components/userComponents/Contact/Contact";
 import Partners from "../../components/userComponents/Partners"; 
-import GallerySlide from "../../components/userComponents/GallerySlide";
+import GallerySlide from "../../components/userComponents/GallerySlider/GallerySlide";
 function Home() {
   return (
     <div>
