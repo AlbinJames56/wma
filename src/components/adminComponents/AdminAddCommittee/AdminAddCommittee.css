@@ -1,0 +1,21 @@
+.popup-container {
+    text-align: center;
+  }
+  
+  .add_event_icon {
+    width: 100px;
+    height: 100px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: blue;
+    border-radius: 50px;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .add_event_icon {
+      height: 50px;
+      width: 50px;
+    }
+  }
+  
