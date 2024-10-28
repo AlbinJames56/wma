@@ -1,9 +1,14 @@
-/* Header Gradient Update */
 .navbody {
-  background: rgb(8,47,95);
-  background: linear-gradient(0deg, rgba(8,47,95,0.01) 3%, rgba(8,47,95,0.583158263305322) 10%, rgba(8,36,95,1) 17%, rgba(8,47,95,1) 70%);
+  background: rgb(8, 47, 95);
+  background: linear-gradient(
+    0deg,
+    rgba(8, 47, 95, 0.01) 3%,
+    rgba(8, 47, 95, 0.583158263305322) 10%,
+    rgba(8, 36, 95, 1) 17%,
+    rgba(8, 47, 95, 1) 70%
+  );
   color: rgba(255, 255, 255, 0);
-  font-family: "Spicy Rice", serif; /* You can use a different font like in the image */
+  font-family: "Spicy Rice", serif;
   height: 80px;
 }
 
@@ -11,12 +16,45 @@
   color: rgb(255, 255, 255);
   transition: color 0.3s ease-in-out;
 }
- 
+
 .hamburger-icon {
-  font-size: 24px; /* Adjust the size as needed */
-  color: black; /* Change the color of the icon */
-  background-color: white; /* Background of the button */
-  padding: 5px; /* Adds space around the icon */
-  border-radius: 5px; /* Rounds the edges */
+  font-size: 24px;
+  color: black;
+  background-color: white;
+  padding: 5px;
+  border-radius: 5px;
   margin-top: -15px;
+}
+.navbar-toggler,
+.hamburger-icon {
+  outline: none !important; /* to remove button border */
+  box-shadow: none !important;
+}
+
+/* Fix for logo and hamburger alignment */
+@media (max-width: 768px) {
+  .navbar-brand img {
+    width: 50px;
+  }
+
+  .navbar-toggler {
+    position: absolute;
+    right: 15px;
+    top: 30px;
+    border: none;
+  }
+
+  .navbar-collapse.show .nav-link {
+    background-color: rgba(8, 36, 95, 0.8);
+    color: white;
+    padding: 10px;
+  }
+  .navbar-brand h3 {
+    font-size: smaller;
+  }
+}
+
+/* Always show the heading */
+.navbar-brand h3 {
+  display: block !important;
 }

@@ -1,15 +1,15 @@
-import React from 'react'
-import AdminEvents from './AdminEvents'
+import React from 'react' 
 import AdminViewReg from './AdminViewReg'
 import AdminEditCommittee from './AdminEditCommittee' 
 import AdminGallery from './AdminGallery'
+import AdminEventPage from './AdminEventPage'
 
 function AdminHome({adminPage}) {  
   return (
     <div className='pt-3'>
-      <h2 className='text-dark mt-5 pt-5 fw-bolder' style={{fontFamily:"sans-serif"}}>Admin DashBoard</h2>
+      
       {
-        adminPage===0 && <AdminEvents/>
+        adminPage===0 && <AdminEventPage/>
       }
       {
         adminPage===1 && <AdminViewReg/>

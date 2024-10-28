@@ -7,8 +7,7 @@ import { Route, Router, Routes } from "react-router-dom";
 import { createContext, useState } from "react";
 import Home from "./pages/userPages/Home/Home";
 import Header from "./components/userComponents/Header/Header";
-import Gallery from "./pages/userPages/Gallery/Gallery";
-import Events from "./pages/userPages/Events/Events";
+import Gallery from "./pages/userPages/Gallery/Gallery"; 
 import CommitteePage from "./pages/userPages/CommitteePage/CommitteePage";
 import MemberReg from "./pages/userPages/Membership/MemberReg";
 import DetailPage from "./components/userComponents/DetailsPage/DetailPage";
@@ -17,6 +16,7 @@ import Contact from "./components/userComponents/Contact/Contact";
 import About from "./components/userComponents/About/About";
 import AdminNavbar from "./components/adminComponents/AdminNav/AdminNavbar";
 import AdminHome from "./pages/adminPages/AdminHome";
+import EventPage from "./pages/userPages/EventPage/EventPage";
 
 export const AppContext = createContext();
 function App() {
@@ -53,7 +53,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
             <Route path="/committee" element={<CommitteePage />} />
-            <Route path="/events" element={<Events />} />
+            <Route path="/eventPage" element={<EventPage/> }/>
             <Route path="/gallery" element={<Gallery />} />
           </Routes>
         </div> 

@@ -33,7 +33,7 @@ color: red;
    
 
 .membership_form {
-  width: 70%;
+  width: 70% ;
   background: rgba(238, 240, 249, 0.991);
   padding: 20px;
   border-radius: 10px;
@@ -58,3 +58,18 @@ color: red;
   color: white;
 }
 
+@media (max-width: 768px) { /* Medium screens and up */
+  .membership_form {
+    width: 100%;
+    font-size: smaller;
+  }
+  .membership_form h1 {
+    font-size: small;
+  }
+  .membership_container h5 {
+    font-size: small;
+  }
+  .mandatory{
+    font-size: smaller;
+    }  
+}

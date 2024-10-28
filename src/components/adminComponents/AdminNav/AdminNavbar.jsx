@@ -1,76 +1,85 @@
 import React, { useState } from "react";
+import { Navbar, Nav, Button } from "react-bootstrap";
 import "./AdminNav.css";
 import Logo from "../../../assets/logo-bgremoved.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
-const AdminNavbar=({setAdminPage})=> {
-  const [icon, setIcon] = useState(false);
+const AdminNavbar = ({ setAdminPage }) => {
+  const [expanded, setExpanded] = useState(false);
+
   const setPage = (page) => {
     setAdminPage(page);
-    setIcon(false);
+    setExpanded(false); // Close the menu after selecting an option
   };
-  return (
-    <div>
-      <div className="admin-navbar navbar navbar-expand-md bg-white shadow-sm fixed-top py-5">
-        <div className="container-fluid d-flex justify-content-between align-items-center ">
-          {/* <!-- Logo Section --> */}
-          <div className="d-flex align-items-center">
-            <img src={Logo} width={100} alt="logo" className="logo me-2" />
-            <h2 className="mb-0">WMA Dashboard</h2>
-          </div>
 
-          {/* <!-- Toggle Button for Mobile --> */}
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          {/* 
-    <!-- Navbar Menu --> */}
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <div className="buttons d-flex flex-md-row flex-column gap-2">
-              <button
-                className="btn btn-primary admin-navbar-button w-100 p-3"
-                onClick={() => setPage(0)}
-              >
-                View / Edit Events
-              </button>
-              <button
-                className="btn btn-dark admin-navbar-button w-100 mb-2"
-                onClick={() => setPage(1)}
-              >
-                View Event Registrations
-              </button>
-              <button
-                className="btn btn-warning admin-navbar-button w-100 mb-2"
-                onClick={() => setPage(2)}
-              >
-                View / Edit Committee
-              </button>
-              <button
-                className="btn btn-success admin-navbar-button w-100 mb-2"
-                onClick={() => setPage(3)}
-              >
-                Gallery
-              </button>
-              <button
-                className="btn btn-danger admin-navbar-button w-100 mb-2"
-                onClick={() => { 
-                }}
-              >
-                Log Out
-              </button>
-            </div>
-          </div>
-        </div>
+  return (
+    <Navbar
+      bg="white"
+      expand="md"
+      className="admin-navbar shadow-sm fixed-top"
+      expanded={expanded}
+    >
+      <div className="container-fluid">
+        {/* Logo Section */}
+        <Navbar.Brand className="d-flex align-items-center">
+          <img src={Logo} width={80} alt="logo" className="logo me-2" />
+          <h2 className="mb-0 text-dark">WMA Dashboard</h2>
+        </Navbar.Brand>
+
+        {/* Toggle Button for Mobile */}
+        <Navbar.Toggle
+          aria-controls="navbarNav"
+          onClick={() => setExpanded(expanded ? false : "expanded")}
+        >
+          <FontAwesomeIcon icon={faBars} className="hamburger-icon" />
+        </Navbar.Toggle>
+
+        {/* Navbar Menu */}
+        <Navbar.Collapse id="navbarNav">
+          <Nav className="ms-auto d-flex flex-md-row flex-column align-items-center gap-2">
+            <Button
+              variant="primary"
+              className="admin-navbar-button w-100  mb-2 "
+              onClick={() => setPage(0)}
+            >
+              View / Edit Events
+            </Button>
+            <Button
+              variant="dark"
+              className="admin-navbar-button w-100 mb-2"
+              onClick={() => setPage(1)}
+            >
+              View Event Registrations
+            </Button>
+            <Button
+              variant="warning"
+              className="admin-navbar-button w-100 mb-2"
+              onClick={() => setPage(2)}
+            >
+              View / Edit Committee
+            </Button>
+            <Button
+              variant="success"
+              className="admin-navbar-button w-100 mb-2"
+              onClick={() => setPage(3)}
+            >
+              Gallery
+            </Button>
+            <Button
+              variant="danger"
+              className="admin-navbar-button w-100 mb-2"
+              onClick={() => {
+                // Add log out functionality
+              }}
+            >
+              Log Out
+            </Button>
+          </Nav>
+        </Navbar.Collapse>
       </div>
-    </div>
+    </Navbar>
   );
-}
+};
 
 export default AdminNavbar;

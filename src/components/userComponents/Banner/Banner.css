@@ -11,3 +11,17 @@
     text-align: center;
      
   }
+  /* Media query for smaller screens */
+@media (max-width: 768px) {
+  .banner {
+    height: 600px; 
+    margin-top: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .banner {
+    margin-top: 30px;
+    height:300px; 
+  }
+}

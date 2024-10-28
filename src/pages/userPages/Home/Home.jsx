@@ -1,5 +1,5 @@
 import React from "react";
-import Events from "../Events/Events";
+import Events from "../../../components/userComponents/EventCard/Events";
 import Banner from "../../../components/userComponents/Banner/Banner";
 import About from "../../../components/userComponents/About/About";
 import MembershipForm from "../../../components/userComponents/Membership/MembershipForm";

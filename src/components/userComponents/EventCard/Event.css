@@ -1,0 +1,31 @@
+.eventbg {
+  background-image: linear-gradient(
+      to bottom,
+      rgb(8, 47, 95),
+      /* Adjust opacity as needed for smooth blending */ rgba(11, 61, 168, 0)
+    ),
+    url("../../../assets/gallery-bg-2.jpg");
+  height: 700px;
+  padding-top: 50px;
+  margin-top: -10px;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .eventbg {
+    height: 300px;
+  }
+  .event_div {
+    margin-top: -80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .eventbg {
+    height: 230px;
+  }
+  .event_div {
+    margin-top: -80px;
+  }
+}

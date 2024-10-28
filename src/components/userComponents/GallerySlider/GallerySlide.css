@@ -2,12 +2,25 @@
     background: rgb(8,47,95);
     background: linear-gradient(180deg, rgba(8,47,95,0.01) 3%, rgba(8,47,95,0.583158263305322) 8%, rgba(8,36,95,1) 14%, rgba(8,47,95,1) 70%);
     padding-top: 0;
-    margin-top: -70px;
-    padding-top: 80px;
+    height:45rem;
+    margin-top: -100px;
+    padding-top: 100px; 
+    margin-bottom: 0; 
   }
   
   .gallery img { 
-    width: 500px;
+    width: 50rem;
     margin: 0 auto;
     border: 5px solid rgba(255, 255, 255, 0.8); /* Add thematic border */
+  }
+  @media (max-width: 768px) {
+    .gallery img { 
+      width: 20rem;
+    }
+    .gallery{
+      margin-top: -60px;
+      
+    padding-top: 30px; 
+      height: 22rem;
+    }
   }

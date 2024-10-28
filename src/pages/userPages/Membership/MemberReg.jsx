@@ -59,7 +59,7 @@ function MemberReg() {
   };
   return (
     <div className="membership_page pt-5">
-      <div className={!thank ? "membership_container container p-5" : ""}>
+      <div className={!thank ? "membership_container  p-3 mt-4" : ""}>
         <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={loading}
@@ -67,7 +67,8 @@ function MemberReg() {
           <CircularProgress color="inherit" />
         </Backdrop>
         {!thank && (
-          <div className="membership_form">
+        <div className="membership_form "> 
+
             <h1>Membership Form</h1>
             <form onSubmit={handleSubmit}>
               <span className="mandatory">* indicates mandatory fields</span>
@@ -274,7 +275,7 @@ function MemberReg() {
                 <span className="mandatory">*</span>
               </h5>
               <div className="row mb-3">
-                <div className="col-md-6">
+                <div className="col-md-6 mb-3">
                   <MDBInput
                     name="keralaContactfname"
                     onChange={handleChange}
@@ -303,14 +304,14 @@ function MemberReg() {
               {/* Spouse Details */}
               <h5>Name of Spouse</h5>
               <div className="row">
-                <div className="col-md-4">
+                <div className="col-md-4 mb-3">
                   <MDBInput
                     name="spouceFname"
                     onChange={handleChange}
                     label="First Name"
                   />
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-4 mb-3">
                   <MDBInput
                     name="spouceMname"
                     onChange={handleChange}
@@ -363,8 +364,8 @@ function MemberReg() {
                 Preferred Method of contact{" "}
                 <span className="text-danger">*</span>
               </h5>
-              <div className="mb-3 d-flex gap-3">
-                <div className="form-check">
+              <div className="mb-3 ms-1 d-flex row gap-3">
+                <div className="form-check col-md-2">
                   <input
                     className="form-check-input"
                     type="checkbox"
@@ -375,7 +376,7 @@ function MemberReg() {
                   />
                   <label className="form-check-label">Email</label>
                 </div>
-                <div className="form-check">
+                <div className="form-check  col-md-2">
                   <input
                     className="form-check-input"
                     type="checkbox"
@@ -386,7 +387,7 @@ function MemberReg() {
                   />
                   <label className="form-check-label">Text Message</label>
                 </div>
-                <div className="form-check">
+                <div className="form-check col-md-2">
                   <input
                     className="form-check-input"
                     type="checkbox"
@@ -397,7 +398,7 @@ function MemberReg() {
                   />
                   <label className="form-check-label">Whatsapp</label>
                 </div>
-                <div className="form-check">
+                <div className="form-check col-md-2">
                   <input
                     className="form-check-input"
                     type="checkbox"
