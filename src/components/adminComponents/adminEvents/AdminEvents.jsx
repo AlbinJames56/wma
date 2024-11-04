@@ -21,7 +21,7 @@ const AdminEvents = ({
     setSelectedEventId(null);
     setDeleteConfirmation(false);
   };
-  console.log(events);
+  // console.log(events);
   
   const deleteEvent = () => {};
   return (

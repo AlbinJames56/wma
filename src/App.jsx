@@ -2,9 +2,12 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import 'react-toastify/dist/ReactToastify.css';
 
 import { Route, Router, Routes } from "react-router-dom";
 import { createContext, useState } from "react";
+import {   ToastContainer,Bounce } from 'react-toastify';
+
 import Home from "./pages/userPages/Home/Home";
 import Header from "./components/userComponents/Header/Header";
 import Gallery from "./pages/userPages/Gallery/Gallery"; 
@@ -59,6 +62,7 @@ function App() {
         </div> 
         <Footer />
       </div> }
+      <ToastContainer position="top-center" autoClose={3000} theme="dark" transition={Bounce}/>
     </>
   );
 }
