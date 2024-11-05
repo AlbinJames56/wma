@@ -20,10 +20,12 @@ import About from "./components/userComponents/About/About";
 import AdminNavbar from "./components/adminComponents/AdminNav/AdminNavbar";
 import AdminHome from "./pages/adminPages/AdminHome";
 import EventPage from "./pages/userPages/EventPage/EventPage";
+import AdminLogin from "./pages/adminPages/AdminLogin";
 
 export const AppContext = createContext();
 function App() {
   const [adminPage,setAdminPage]=useState(0)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 //  console.log(adminPage);
  
 
@@ -37,8 +39,12 @@ function App() {
           path="/admin"
           element={
             <>
-              <AdminNavbar setAdminPage={setAdminPage}/>
-               <AdminHome adminPage={adminPage} />
+              <AdminNavbar setAdminPage={setAdminPage} />
+                  {!isLoggedIn ? (
+                    <AdminLogin setIsLoggedIn={setIsLoggedIn} />
+                  ) : (
+                    <AdminHome adminPage={adminPage} />
+                  )}
             </>
           }
         />
@@ -49,6 +55,7 @@ function App() {
         <Header />
         <div className="contents">
           <Routes>
+            
             <Route path="/" element={<Home />} />
             <Route path="/event" element={<DetailPage />} />
             <Route path="/membership" element={<MemberReg />} />
