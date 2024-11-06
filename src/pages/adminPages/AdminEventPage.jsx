@@ -74,6 +74,7 @@ function AdminEventPage() {
             <AdminEventForm
               events={events}
               setEvents={setEvents}
+              setAddEvent={setAddEvent}
               setViewEvent={setViewEvent}
               setCurrentId={setCurrentId}
               currentId={currentId}
