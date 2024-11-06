@@ -20,8 +20,10 @@ function AdminLogin({ setIsLoggedIn }) {
         
         if (result.status == 200) {
           toast.success("Admin Logged in Successfully")
-          console.log(result.data);
-          sessionStorage.setItem("token",result.data.token)
+          const token = result.data.token;
+          const expiry = new Date().getTime() + 24 * 60 * 60 * 1000; // auto logout admin in 1 day
+          sessionStorage.setItem("token", token);
+          sessionStorage.setItem("tokenExpiry", expiry);
           setLoading(false)
           setIsLoggedIn(true) 
         } else {

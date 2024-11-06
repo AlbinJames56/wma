@@ -5,7 +5,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Route, Router, Routes } from "react-router-dom";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import {   ToastContainer,Bounce } from 'react-toastify';
 
 import Home from "./pages/userPages/Home/Home";
@@ -27,8 +27,21 @@ function App() {
   const [adminPage,setAdminPage]=useState(0)
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 //  console.log(adminPage);
- 
+//  prevent auto logout when reloading
+useEffect(() => {
+  const token = sessionStorage.getItem("token");
+  const expiry = sessionStorage.getItem("tokenExpiry");
+  const now = new Date().getTime();
 
+  if (token && expiry && now < expiry) {
+    setIsLoggedIn(true);
+  } else {
+    // Clear token if it’s expired or missing
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("tokenExpiry");
+    setIsLoggedIn(false);
+  }
+}, []);
   return (
     <>
     {location.pathname === "/admin" ?

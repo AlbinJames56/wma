@@ -1,99 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Button, Modal } from "react-bootstrap";
 import AddIcon from "@mui/icons-material/Add";
 import AdminEvents from "../../components/adminComponents/adminEvents/AdminEvents";
 import AdminEventView from "../../components/adminComponents/adminEvents/AdminEventView";
 import AdminEventForm from "../../components/adminComponents/adminEvents/AdminEventForm";
+import { getEventsAPI } from "../../Services/allApi";
 
 function AdminEventPage() {
-  const [events, setEvents] = useState([
-    {
-      id: 1,
-      title: "Event 1",
-      description: "Description of Event 1",
-      image:
-        "https://akm-img-a-in.tosshub.com/indiatoday/images/story/202410/google-doodle-kk-254807570-16x9_0.png?VersionId=QPa62eLhkdOcH.LEajXbudLs5HFuXtYN&size=690:388",
-        event_date:"10/10/2024",
-        event_time:"9:40 AM",
-        event_location:"contezza auditoriam",
-        state:"Kerala",
-        country:"india",
-        tickets:[
-            {
-                category:"Premium",
-                description:"Premium Seats with Lunch and dinner",
-                pricing:[
-                    {
-                        category:"Adult",
-                        price:"150$",
-                    },
-                    {
-                        category:"Children ",
-                        price:"100$",
-                    },
-                    {
-                        category:"Infants",
-                        price:"0$",
-                    },
-                ]
-        },
-            {
-                category:"Executive",
-                description:"Premium Second section Seats with Lunch",
-                pricing:[
-                    {
-                        category:"Adult",
-                        price:"120$",
-                    },
-                    {
-                        category:"Children ",
-                        price:"80$",
-                    },
-                    {
-                        category:"Infants",
-                        price:"0$",
-                    },
-                ]
-        },
-            {
-                category:"Economic",
-                description:"Third section Seats with Lunch",
-                pricing:[
-                    {
-                        category:"Adult",
-                        price:"100$",
-                    },
-                    {
-                        category:"Children ",
-                        price:"50$",
-                    },
-                    {
-                        category:"Infants",
-                        price:"0$",
-                    },
-                ]
-        },
-    ]
-
-    },
-    {
-      id: 2,
-      title: "Event 2",
-      description: "Description of Event 2",
-      image:
-        "https://etvbharatimages.akamaized.net/etvbharat/prod-images/25-10-2024/448-252-22757854-271-22757854-1729835092433.jpg",
-    },
-    {
-      id: 3,
-      title: "Event 3",
-      description: "Description of Event 3",
-      image:
-        "https://superbcollections.com/wp-content/uploads/2023/10/wp8047568.jpg",
-    },
-  ]);
+  const [events, setEvents] = useState([]);
   const [currentId, setCurrentId] = useState(null);
   const [addEvent, setAddEvent] = useState(false);
   const [viewEvent, setViewEvent] = useState(false);
+
+  // Get events from database
+  const getEvents = async () => {
+    try {
+      const result = await getEventsAPI();
+      if (result.status == 200) {
+        setEvents(result.data);
+      } else {
+        console.log("Error while getting events", result.message);
+      }
+    } catch (err) {
+      console.log("Catch error", err);
+    }
+  };
+  
+  
+  useEffect(()=>{
+    getEvents()
+  },[])
 
   return (
     <Container fluid style={{ marginTop: "90px", padding: "10px" }}>

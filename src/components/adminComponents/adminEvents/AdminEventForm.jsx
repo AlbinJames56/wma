@@ -4,10 +4,29 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import TimePicker from "rc-time-picker";
 import "rc-time-picker/assets/index.css";
-import {Container,Row,Col,Form,Button,Card,Image,CloseButton,Modal,} from "react-bootstrap";
-import { addEventAPI } from "../../../Services/allApi";
+import moment from "moment";
 
-function AdminEventForm({currentId,setCurrentId,setAddEvent,events,setEvents,}) {
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  Button,
+  Card,
+  Image,
+  CloseButton,
+  Modal,
+} from "react-bootstrap";
+import { addEventAPI, updateEventAPI } from "../../../Services/allApi";
+import { SERVER_URL } from "../../../Services/ServerUrl";
+
+function AdminEventForm({
+  currentId,
+  setCurrentId,
+  setAddEvent,
+  events,
+  setEvents,
+}) {
   const [event, setEvent] = useState({
     title: "",
     description: "",
@@ -22,7 +41,7 @@ function AdminEventForm({currentId,setCurrentId,setAddEvent,events,setEvents,}) 
     file: "",
     regOpen: "Yes",
   });
-
+  const [isEditing, setIsEditing] = useState(false);
   const [showTicketModal, setShowTicketModal] = useState(false);
   const [ticketType, setTicketType] = useState({
     name: "",
@@ -32,6 +51,19 @@ function AdminEventForm({currentId,setCurrentId,setAddEvent,events,setEvents,}) 
   const [categoryInputs, setCategoryInputs] = useState([
     { name: "", price: "" },
   ]);
+const [selectedDate,setSelectedDate]=useState(null)
+ console.log("event",event);
+ 
+useEffect(()=>{
+if(event?.event_date){
+setSelectedDate(new Date(event?.event_date))
+}
+console.log("selectedDate",selectedDate);
+console.log("sel",event?.event_date);
+
+},[event])
+console.log("selectedDate",selectedDate);
+
 
   // Function to add a new category input
   const addCategoryInput = () => {
@@ -89,20 +121,99 @@ function AdminEventForm({currentId,setCurrentId,setAddEvent,events,setEvents,}) 
       categories: newCategories,
     }));
   };
+console.log("evern",event.eventPoster);
 
   // generate image url
   const [preview, setPreview] = useState("");
   useEffect(() => {
     if (event.file) {
       setPreview(URL.createObjectURL(event.file));
+    }else if(event.eventPoster){
+      setPreview(`${SERVER_URL}/uploads/${event.eventPoster}`);
+       
     } else {
       setPreview("");
     }
-  }, [event.file]);
+  }, [event.file, event.eventPoster]);
 
-  const handleAddEvent = async (e) => {
+  console.log("epreveiw",preview);
+  // Load existing event data when editing
+  useEffect(() => {
+    if (currentId) {
+      const eventToEdit = events.find((event) => event._id === currentId);
+      if (eventToEdit) {
+        setEvent(eventToEdit);
+        setIsEditing(true);
+      }
+    } else {
+      setIsEditing(false);
+    }
+  }, [currentId, events]);
+
+  // function to choose whether it is add or update
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(event);
+    isEditing ? handleUpdateEvent() : handleAddEvent();
+  };
+  // add event to database
+  const handleAddEvent = async (e) => {
+    if (validateForm()) {
+      const reqBody = createFormData();
+      const token = sessionStorage.getItem("token");
+
+      if (token) {
+        const reqHeader = {
+          authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        };
+        try {
+          const result = await addEventAPI(reqBody, reqHeader);
+          if (result.status === 200) {
+            toast.success("Event added successfully");
+            clearSubmit();
+          } else {
+            toast.error("Not Able to Add");
+          }
+        } catch (err) {
+          console.log("Error Adding event:", err);
+        }
+      } else {
+        toast.warn("Unauthorized");
+      }
+    }
+  };
+  const handleUpdateEvent = async () => {
+    if (validateForm()) {
+      const reqBody = createFormData();
+      const token = sessionStorage.getItem("token");
+
+      if (token) {
+        const reqHeader = {
+          authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        };
+        try {
+          const result = await updateEventAPI(currentId, reqBody, reqHeader); 
+          if (result.status === 200) {
+            toast.success("Event updated successfully");
+            clearSubmit();
+          } else {
+            toast.error("Not Able to Update");
+          }
+        } catch (err) {
+          console.log("Error Updating event:", err);
+        }
+      } else {
+        toast.warn("Unauthorized");
+      }
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setEvent({ ...event, file: selectedFile });
+  };
+  const createFormData = () => {
     const {
       title,
       description,
@@ -117,55 +228,36 @@ function AdminEventForm({currentId,setCurrentId,setAddEvent,events,setEvents,}) 
       file,
       regOpen,
     } = event;
-
-    if (
-      !title ||
-      !description ||
-      !event_time ||
-      !event_date ||
-      !event_location ||
-      !state ||
-      !country ||
-      !terms ||
-      !file ||
-      !regOpen
-    ) {
-      toast.warn("Please Fill all fields");
-    } else {
-      // api call(req body)
-      const reqBody = new FormData();
-      reqBody.append("title", title);
-      reqBody.append("description", description);
-      reqBody.append("event_time", event_time);
-      reqBody.append("event_date", event_date);
-      reqBody.append("event_location_url", event_location_url);
-      reqBody.append("event_location", event_location);
-      reqBody.append("tickets", JSON.stringify(tickets));
-      reqBody.append("state", state);
-      reqBody.append("country", country);
-      reqBody.append("terms", terms);
+    const reqBody = new FormData();
+    reqBody.append("title", title);
+    reqBody.append("description", description);
+    reqBody.append("event_time", event_time);
+    reqBody.append("event_date", event_date); // Save only date .toISOString().split("T")[0]
+    reqBody.append("event_location_url", event_location_url);
+    reqBody.append("event_location", event_location);
+    reqBody.append("tickets", JSON.stringify(tickets));
+    reqBody.append("state", state);
+    reqBody.append("country", country);
+    reqBody.append("terms", terms);
+    if (file) {
       reqBody.append("eventPoster", file);
-      reqBody.append("regOpen", regOpen);
-      const reqHeader = {
-        // "authorization": `Bearer ${token}`,
-        "Content-Type": "multipart/form-data",
-      };
-      try {
-        const result = await addEventAPI(reqBody, reqHeader);
-        if (result.status == 200) {
-          toast.success("Event added successfully");
-        } else {
-          toast.error("Not Able to Add");
-          console.log(result.message);
-        }
-      } catch (err) {
-        console.log("Error Adding in event :", err);
-      }
     }
+    reqBody.append("regOpen", regOpen);
+    return reqBody;
   };
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    setEvent({ ...event, file: selectedFile });
+
+  const validateForm = () => {
+    const { title, description, event_time, event_date, event_location, state, country, terms, file, regOpen } = event;
+   console.log("evrn",event);
+  //  // Ensure event_date and event_time are not empty and are valid
+  // const isEventDateValid = event_date instanceof Date && !isNaN(event_date);
+  // const isEventTimeValid = event_time && event_time.trim() !== "";
+    if (!title || !description ||  !event_date ||  
+      !event_time ||  !event_location || !state || !country || !terms ||   !regOpen) {
+      toast.warn("Please fill all fields");
+      return false;
+    }
+    return true;
   };
 
   const clearSubmit = () => {
@@ -174,6 +266,7 @@ function AdminEventForm({currentId,setCurrentId,setAddEvent,events,setEvents,}) 
       description: "",
       event_time: "",
       event_date: "",
+      event_location_url: "",
       event_location: "",
       state: "",
       country: "",
@@ -211,7 +304,7 @@ function AdminEventForm({currentId,setCurrentId,setAddEvent,events,setEvents,}) 
           />
         </Col>
       </Row>
-      <Form onSubmit={handleAddEvent}>
+      <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
           <Form.Label>Title</Form.Label>
           <Form.Control
@@ -237,8 +330,7 @@ function AdminEventForm({currentId,setCurrentId,setAddEvent,events,setEvents,}) 
           <Col md={6}>
             <Form.Group className="mb-3">
               <Form.Label>Event Date</Form.Label>
-              <DatePicker
-              
+              <DatePicker 
                 selected={event.event_date ? new Date(event.event_date) : null}
                 onChange={(date) => setEvent({ ...event, event_date: date })}
                 dateFormat="MM/dd/yyyy"
@@ -251,16 +343,18 @@ function AdminEventForm({currentId,setCurrentId,setAddEvent,events,setEvents,}) 
             <Form.Group className="mb-3 d-flex">
               <Form.Label>Event Time</Form.Label>
               <div className="ms-2 form-control  w-75">
-              <TimePicker 
-                onChange={(value) =>
-                  setEvent({
-                    ...event,
-                    event_time: value && value.format("hh:mm A"),
-                  })
-                }
-                showSecond={false}
-                use12Hours
-              /></div>
+                <TimePicker
+                 value={event.event_time ? moment(event.event_time, 'hh:mm A') : null}
+                  onChange={(value) =>
+                    setEvent({
+                      ...event,
+                      event_time: value && value.format("hh:mm A"),
+                    })
+                  }
+                  showSecond={false}
+                  use12Hours
+                />
+              </div>
             </Form.Group>
           </Col>
         </Row>
@@ -273,7 +367,6 @@ function AdminEventForm({currentId,setCurrentId,setAddEvent,events,setEvents,}) 
             onChange={(e) =>
               setEvent({ ...event, event_location_url: e.target.value })
             }
-            
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -393,7 +486,7 @@ function AdminEventForm({currentId,setCurrentId,setAddEvent,events,setEvents,}) 
             Cancel
           </Button>
           <Button variant="primary" type="submit">
-            Submit
+          {isEditing ? "Update" : "Submit"}
           </Button>
         </div>
       </Form>
@@ -472,8 +565,6 @@ function AdminEventForm({currentId,setCurrentId,setAddEvent,events,setEvents,}) 
         </Modal.Footer>
       </Modal>
     </Container>
-    
   );
-  
-} 
+}
 export default AdminEventForm;

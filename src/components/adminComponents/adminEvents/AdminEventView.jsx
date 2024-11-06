@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import {
-  Card,
+import {Card,
   Container,
   Row,
   Col,
@@ -9,16 +8,17 @@ import {
   Image,
   CloseButton,
 } from "react-bootstrap";
-function AdminEventView({ events, setViewEvent, setCurrentId, currentId }) {
+import { SERVER_URL } from "../../../Services/ServerUrl";
+function AdminEventView({ events, setViewEvent, currentId }) {
   const [event, setEvent] = useState({});
   const viewEvent = currentId
-    ? events.find((event) => event.id === currentId)
+    ? events.find((event) => event._id === currentId)
     : null;
-
+    console.log(viewEvent);
   useEffect(() => {
     if (viewEvent) setEvent(viewEvent);
   }, [viewEvent]);
-
+console.log(`${SERVER_URL}/uploads/${viewEvent?.eventPoster}`);
   return (
     <Container className="form-container p-4 bg-white rounded shadow-sm">
       <Row className="form-header align-items-center mb-3">
@@ -36,15 +36,14 @@ function AdminEventView({ events, setViewEvent, setCurrentId, currentId }) {
       <Row className="form-input mb-3 p-3 d-flex justify-content-center rounded bg-light shadow">
         <strong>Poster:</strong>
         <Image
-          src={event?.image}
+          src={`${SERVER_URL}/uploads/${viewEvent?.eventPoster}`}
           alt="Poster"
           fluid
           style={{ maxWidth: "400px" }}
         />
       </Row>
       <Row className="form-content">
-        <Col md={6}>
-          {" "}
+        <Col md={6}> 
           <div className="form-input mb-3 me-2  p-3 rounded bg-light shadow">
             <strong>Description:</strong>
             <div>{event.description}</div>
@@ -60,6 +59,12 @@ function AdminEventView({ events, setViewEvent, setCurrentId, currentId }) {
           <div className="form-input mb-3 me-2  p-3 rounded bg-light shadow">
             <strong>Event Time:</strong>
             <div>{event.event_time}</div>
+          </div>
+        </Col>
+        <Col md={6}>
+          <div className="form-input mb-3 me-2  p-3 rounded bg-light shadow">
+            <strong>Event Location url:</strong>
+            <div>{event.event_location_url}</div>
           </div>
         </Col>
         <Col md={6}>

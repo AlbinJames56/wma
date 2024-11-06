@@ -3,6 +3,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { Card, Modal, Button, Image } from "react-bootstrap";
+import { SERVER_URL } from "../../../Services/ServerUrl";
 const AdminEvents = ({
   events,
   setEvents,
@@ -21,7 +22,10 @@ const AdminEvents = ({
     setSelectedEventId(null);
     setDeleteConfirmation(false);
   };
-  // console.log(events);
+//   console.log(events);
+  
+// console.log(`${SERVER_URL}/uploads/${events?.eventPoster}`);
+
   
   const deleteEvent = () => {};
   return (
@@ -34,27 +38,27 @@ const AdminEvents = ({
               className="text-secondary mx-1"
               onClick={() => {
                 setViewEvent(true);
-                setCurrentId(events?.id);
+                setCurrentId(events?._id);
               }}
             />
             <EditIcon
               className="text-secondary mx-1"
               onClick={() => {
                 setAddEvent(true);
-                setCurrentId(events?.id);
+                setCurrentId(events?._id);
               }}
             />
             <DeleteForeverIcon
               className="text-secondary mx-1"
               onClick={() => {
-                openDeleteConfirmation(events?.id);
+                openDeleteConfirmation(events?._id);
               }}
             />
           </div>
         </Card.Header>
         <Card.Body className="d-flex justify-content-center">
           <Image
-            src={events?.image}
+            src={`${SERVER_URL}/uploads/${events?.eventPoster}`}
             alt="event poster"
             fluid
             rounded

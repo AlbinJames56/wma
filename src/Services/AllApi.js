@@ -7,8 +7,16 @@ export const adminLogin=async(user)=>{
 }
 
 // add event
-export const addEventAPI=async(reqBody,reqHeader)=>{
-    console.log("insiea");
-    
-    return await commonAPI("POST",`${SERVER_URL}/addEvents`,reqBody,reqHeader)
+export const addEventAPI=async(reqBody,reqHeader)=>{ 
+    return await commonAPI("POST",`${SERVER_URL}/AdminRouter/addEvents`,reqBody,reqHeader)
+}
+
+// getEvents
+export const getEventsAPI=async()=>{
+    return  await commonAPI("GET",`${SERVER_URL}/AdminRouter/getEvents`,"","")
+}
+
+// updateEventAPI
+export const updateEventAPI=async(id,reqBody,reqHeader)=>{
+    return await commonAPI("PUT",`${SERVER_URL}/AdminRouter/updateEvent/${id}`,reqBody,reqHeader)
 }
