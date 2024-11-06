@@ -82,7 +82,7 @@ useEffect(() => {
         </div> 
         <Footer />
       </div> }
-      <ToastContainer position="top-center" autoClose={3000} theme="dark" transition={Bounce}/>
+      <ToastContainer position="top-center" autoClose={2000} theme="dark" transition={Bounce}/>
     </>
   );
 }

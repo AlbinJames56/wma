@@ -20,3 +20,8 @@ export const getEventsAPI=async()=>{
 export const updateEventAPI=async(id,reqBody,reqHeader)=>{
     return await commonAPI("PUT",`${SERVER_URL}/AdminRouter/updateEvent/${id}`,reqBody,reqHeader)
 }
+
+// delete Project API
+export const deleteEventAPI=async(id,reqHeader)=>{
+    return await commonAPI("DELETE",`${SERVER_URL}/AdminRouter/deleteEvent/${id}`,{},reqHeader)
+}

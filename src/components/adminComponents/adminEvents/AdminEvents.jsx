@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { Card, Modal, Button, Image } from "react-bootstrap";
 import { SERVER_URL } from "../../../Services/ServerUrl";
+import { deleteEventAPI } from "../../../Services/allApi";
+import { toast } from "react-toastify"; 
 const AdminEvents = ({
   events,
   setEvents,
@@ -11,7 +13,7 @@ const AdminEvents = ({
   setAddEvent,
   currentId,
   setCurrentId,
-}) => {
+}) => { 
   const [deleteConfirmation, setDeleteConfirmation] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState(null);
   const openDeleteConfirmation = (id) => {
@@ -22,12 +24,31 @@ const AdminEvents = ({
     setSelectedEventId(null);
     setDeleteConfirmation(false);
   };
-//   console.log(events);
-  
-// console.log(`${SERVER_URL}/uploads/${events?.eventPoster}`);
 
-  
-  const deleteEvent = () => {};
+  const deleteEvent = async () => {
+    const token = sessionStorage.getItem("token");
+    if (token) {
+      const reqHeader = {
+        authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      };
+      // api call to delete
+      try {
+        const result = await deleteEventAPI(selectedEventId, reqHeader);
+        console.log(selectedEventId);
+        
+        if (result.status == 200) {
+          toast.error("Event deleted");
+          closeDeleteConfirmation()
+           // Update the events state to remove the deleted event
+        setEvents((prevEvents) => prevEvents.filter(event => event._id !== selectedEventId));
+        }
+      } catch (err) {
+        console.log(err);
+        closeDeleteConfirmation()
+      }
+    }
+  };
   return (
     <>
       <Card className="mb-3 shadow-sm">
