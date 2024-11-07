@@ -1,25 +1,44 @@
- 
-.card-title {
-  font-size: 1.5rem;
+/* Styles for the scrollable container */
+.event-scroll-container {
+  display: flex;
+  overflow-x: auto;
+  padding: 10px;
+  gap: 10px;  
+  scroll-snap-type: x mandatory;  
 }
-
+.event-card {
+  width: 15rem; 
+}
+.card-title {
+  font-size: 0.9rem !important;
+  font-weight: bolder !important;
+}
+.butn {
+  padding: 1 !important;
+  font-size: x-small !important;
+  background: #000 !important;
+}
 .card-text {
-  font-size: 1rem;
+  font-size: 0.8rem;
 }
 
 /* Hide elements on small screens by default */
 .hide-on-small {
-  display: none !important;
+  display: block !important;
 }
 
- 
 /* Media query for smaller screens */
 @media (max-width: 768px) {
   .card-title {
-    font-size: 1.2rem;
+    font-size: .7rem !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
-  .hide-on-small {
-    display: none !important;
+  .event-card {
+    width: 8rem;
+  }
+  .event-card-container{
+max-height: 8rem;
   }
 }
 /* Media query for very small screens (mobile) */
@@ -27,5 +46,7 @@
   .card-title {
     font-size: 0.8rem;
   }
-  
+  .hide-on-small {
+    display: none !important;
+  }
 }

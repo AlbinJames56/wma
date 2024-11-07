@@ -2,7 +2,7 @@
   background-image: linear-gradient(
       to bottom,
       rgb(8, 47, 95),
-      /* Adjust opacity as needed for smooth blending */ rgba(11, 61, 168, 0)
+      rgba(11, 61, 168, 0)
     ),
     url("../../../assets/gallery-bg-2.jpg");
   height: 700px;
@@ -11,6 +11,7 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 /* Media query for smaller screens */
 @media (max-width: 768px) {
   .eventbg {
@@ -27,5 +28,51 @@
   }
   .event_div {
     margin-top: -80px;
+  }
+}
+
+/* Styles for the scrollable container */
+.event-scroll-container {
+  display: flex;
+  overflow-x: auto;
+  padding: 10px;
+  gap: 10px; /* Spacing between cards */
+  scroll-snap-type: x mandatory; /* Optional: Enables snap scrolling */
+}
+
+.card-title {
+  font-size: 0.9rem !important;
+  font-weight: bolder !important;
+}
+
+.butn {
+  padding: 1 !important;
+  font-size: x-small !important;
+  background: #000 !important;
+}
+
+.card-text {
+  font-size: 0.8rem;
+}
+
+/* Hide elements on small screens by default */
+.hide-on-small {
+  display: block !important;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  .card-title {
+    font-size: 1.2rem;
+  }
+}
+
+/* Media query for very small screens (mobile) */
+@media (max-width: 480px) {
+  .card-title {
+    font-size: 0.8rem;
+  }
+  .hide-on-small {
+    display: none !important;
   }
 }

@@ -9,8 +9,8 @@ function About() {
         <div className="p-5 p-md-5">
           <h1 className="fw-500 text-center text-info pt-4">About Us</h1>
           <div className="d-flex flex-column flex-md-row">
-            <div className="col-md-9 me-md-5">
-              <p className="mt-2 ms-md-5 ms-0 p-md-3" style={{ textAlign: "justify" }}>
+            <div className="col-md-8  ">
+              <p className="mt-2 ms-0 p-md-3" style={{ textAlign: "justify" }}>
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magnam
                 libero tempora nesciunt ullam enim provident assumenda cum
                 eligendi praesentium fugiat, perferendis ipsum error nam nemo quia
@@ -25,8 +25,8 @@ function About() {
                 explicabo.
               </p>
             </div>
-            <div>
-              <img className="mt-md-0 mt-4 mb-4 mb-md-0" width={300} src={logo} alt="logo" />
+            <div className=" d-flex justify-content-center">
+              <img className="mt-md-0 mt-4 mb-4 mb-md-0" width={ 250} src={logo} alt="logo" />
             </div>
           </div>
         </div>

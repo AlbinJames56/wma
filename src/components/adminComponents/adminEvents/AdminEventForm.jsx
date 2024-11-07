@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import TimePicker from "rc-time-picker";
-import "rc-time-picker/assets/index.css";
+import { toast } from "react-toastify"; 
 import moment from "moment";
 
 import {
@@ -51,19 +47,6 @@ function AdminEventForm({
   const [categoryInputs, setCategoryInputs] = useState([
     { name: "", price: "" },
   ]);
-const [selectedDate,setSelectedDate]=useState(null)
- console.log("event",event);
- 
-useEffect(()=>{
-if(event?.event_date){
-setSelectedDate(new Date(event?.event_date))
-}
-console.log("selectedDate",selectedDate);
-console.log("sel",event?.event_date);
-
-},[event])
-console.log("selectedDate",selectedDate);
-
 
   // Function to add a new category input
   const addCategoryInput = () => {
@@ -121,34 +104,36 @@ console.log("selectedDate",selectedDate);
       categories: newCategories,
     }));
   };
-console.log("evern",event.eventPoster);
 
   // generate image url
   const [preview, setPreview] = useState("");
   useEffect(() => {
     if (event.file) {
       setPreview(URL.createObjectURL(event.file));
-    }else if(event.eventPoster){
+    } else if (event.eventPoster) {
       setPreview(`${SERVER_URL}/uploads/${event.eventPoster}`);
-       
     } else {
       setPreview("");
     }
   }, [event.file, event.eventPoster]);
 
-  console.log("epreveiw",preview);
   // Load existing event data when editing
   useEffect(() => {
     if (currentId) {
       const eventToEdit = events.find((event) => event._id === currentId);
       if (eventToEdit) {
-        setEvent(eventToEdit);
+        setEvent({
+          ...eventToEdit,
+          event_date: eventToEdit.event_date
+            ? moment(eventToEdit.event_date).format("YYYY-MM-DD")
+            : "", // Format date as YYYY-MM-DD for date input
+        });
         setIsEditing(true);
       }
     } else {
       setIsEditing(false);
     }
-  }, [currentId, events]);
+  }, [currentId, events]); 
 
   // function to choose whether it is add or update
   const handleSubmit = async (e) => {
@@ -193,7 +178,7 @@ console.log("evern",event.eventPoster);
           "Content-Type": "multipart/form-data",
         };
         try {
-          const result = await updateEventAPI(currentId, reqBody, reqHeader); 
+          const result = await updateEventAPI(currentId, reqBody, reqHeader);
           if (result.status === 200) {
             toast.success("Event updated successfully");
             clearSubmit();
@@ -232,7 +217,7 @@ console.log("evern",event.eventPoster);
     reqBody.append("title", title);
     reqBody.append("description", description);
     reqBody.append("event_time", event_time);
-    reqBody.append("event_date", event_date); // Save only date .toISOString().split("T")[0]
+    reqBody.append("event_date", event_date);
     reqBody.append("event_location_url", event_location_url);
     reqBody.append("event_location", event_location);
     reqBody.append("tickets", JSON.stringify(tickets));
@@ -247,13 +232,30 @@ console.log("evern",event.eventPoster);
   };
 
   const validateForm = () => {
-    const { title, description, event_time, event_date, event_location, state, country, terms, file, regOpen } = event;
-   console.log("evrn",event);
-  //  // Ensure event_date and event_time are not empty and are valid
-  // const isEventDateValid = event_date instanceof Date && !isNaN(event_date);
-  // const isEventTimeValid = event_time && event_time.trim() !== "";
-    if (!title || !description ||  !event_date ||  
-      !event_time ||  !event_location || !state || !country || !terms ||   !regOpen) {
+    const {
+      title,
+      description,
+      event_time,
+      event_date,
+      event_location,
+      state,
+      country,
+      terms,
+      file,
+      regOpen,
+    } = event;
+    console.log("evrn", event);
+    if (
+      !title ||
+      !description ||
+      !event_date ||
+      !event_time ||
+      !event_location ||
+      !state ||
+      !country ||
+      !terms ||
+      !regOpen
+    ) {
       toast.warn("Please fill all fields");
       return false;
     }
@@ -330,34 +332,32 @@ console.log("evern",event.eventPoster);
           <Col md={6}>
             <Form.Group className="mb-3">
               <Form.Label>Event Date</Form.Label>
-              <DatePicker 
-                selected={event.event_date ? new Date(event.event_date) : null}
-                onChange={(date) => setEvent({ ...event, event_date: date })}
-                dateFormat="MM/dd/yyyy"
+              <Form.Control
+                type="date"
+                value={event.event_date || ""}
+                onChange={(e) =>
+                  setEvent({ ...event, event_date: e.target.value })
+                }
                 className="form-control ms-2"
               />
             </Form.Group>
           </Col>
 
           <Col md={6}>
-            <Form.Group className="mb-3 d-flex">
+            <Form.Group className="mb-3">
               <Form.Label>Event Time</Form.Label>
-              <div className="ms-2 form-control  w-75">
-                <TimePicker
-                 value={event.event_time ? moment(event.event_time, 'hh:mm A') : null}
-                  onChange={(value) =>
-                    setEvent({
-                      ...event,
-                      event_time: value && value.format("hh:mm A"),
-                    })
-                  }
-                  showSecond={false}
-                  use12Hours
-                />
-              </div>
+              <Form.Control
+                type="time"
+                value={event.event_time || ""}
+                onChange={(e) =>
+                  setEvent({ ...event, event_time: e.target.value })
+                }
+                className="form-control ms-2"
+              />
             </Form.Group>
           </Col>
         </Row>
+
         <Form.Group className="mb-3">
           <Form.Label>Event Location Link</Form.Label>
           <Form.Control
@@ -486,7 +486,7 @@ console.log("evern",event.eventPoster);
             Cancel
           </Button>
           <Button variant="primary" type="submit">
-          {isEditing ? "Update" : "Submit"}
+            {isEditing ? "Update" : "Submit"}
           </Button>
         </div>
       </Form>

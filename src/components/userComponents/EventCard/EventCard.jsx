@@ -3,85 +3,51 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { useNavigate } from "react-router-dom";
 import "./EventCard.css";
+import { SERVER_URL } from "../../../Services/ServerUrl";
 
-function EventCard({ showDetailsOnSmallScreens = false }) {
+function EventCard({ showDetailsOnSmallScreens = false, event }) {
   const navigate = useNavigate();
-  const handleView = () => {
-    // navigate(`/event/${encodeURIComponent(event._id)}`);
-    navigate("/event");
+
+  const handleView = (e) => {
+    e.stopPropagation(); // Prevents the click from also triggering the handleCardClick on large screens
+    navigate(`/event/${encodeURIComponent(event._id)}`);
   };
+
   const handleCardClick = () => {
-    // Check if the screen size is small
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= 480) {
       handleView();
     }
   };
 
   return (
-    <div className="container">
-      <div className="d-flex justify-content-center align-items-center  ">
-        <Card
-          style={{ width: "20rem" }}
-          className="m-3 col-md:m-1"
-          onClick={handleCardClick} // Add click handler to the card
-        >
-          <Card.Img
-            variant="top"
-            src="https://images.pexels.com/photos/2747449/pexels-photo-2747449.jpeg?cs=srgb&dl=pexels-wolfgang-1002140-2747449.jpg&fm=jpg"
-          />
-          <Card.Body>
-            <Card.Title>Event Title</Card.Title>
-
-            {/* Text that will be hidden on small screens */}
-            <Card.Text className={`col-md:fs-s card-text ${showDetailsOnSmallScreens ? "" : "hide-on-small"}`}
-            >
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </Card.Text>
-
-            {/* Button that will be hidden on small screens */}
-            <Button
-              variant="primary"
-              size="lg"
-              className={`w-100 card-button ${showDetailsOnSmallScreens ? "" : "hide-on-small"}`}
-              onClick={handleView}
-            >
-              View
-            </Button>
-          </Card.Body>
-        </Card>
-        <Card
-          style={{ width: "20rem" }}
-          className="m-3 col-md:m-1"
-          onClick={handleCardClick} // Add click handler to the card
-        >
-          <Card.Img
-            variant="top"
-             src="https://images.pexels.com/photos/2263436/pexels-photo-2263436.jpeg?cs=srgb&dl=pexels-teddy-2263436.jpg&fm=jpg"
-          />
-          <Card.Body>
-            <Card.Title>Onam</Card.Title>
-
-            {/* Text that will be hidden on small screens */}
-            <Card.Text className={`col-md:fs-s card-text ${showDetailsOnSmallScreens ? "" : "hide-on-small"}`}> 
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </Card.Text>
-
-            {/* Button that will be hidden on small screens */}
-            <Button
-              variant="primary"
-              size="lg"
-              className={`w-100 card-button ${showDetailsOnSmallScreens ? "" : "hide-on-small"}`}
-              onClick={handleView}
-            >
-              View
-            </Button>
-          </Card.Body>
-        </Card>
-
+    <div className="event-card-container" >
+      <Card
         
-      </div>
+        className="m-3 event-card"
+        onClick={handleCardClick}
+      >
+        <Card.Img
+          variant="top"
+          src={`${SERVER_URL}/uploads/${event.eventPoster}`}
+        />
+        <Card.Body>
+          <Card.Title className="card-title text-center">{event.title}</Card.Title>
+
+          <Card.Text
+            className={`card-text text-center ${showDetailsOnSmallScreens ? "" : "hide-on-small"}`}
+          >
+            {event.description}
+          </Card.Text>
+
+          <Button
+            variant="primary"
+            className={`w-100 butn ${showDetailsOnSmallScreens ? "" : "hide-on-small"}`}
+            onClick={handleView}
+          >
+            View
+          </Button>
+        </Card.Body>
+      </Card>
     </div>
   );
 }

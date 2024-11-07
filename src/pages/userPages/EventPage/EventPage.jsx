@@ -12,10 +12,10 @@ function EventPage() {
           <h1 className="text-center text-info">Upcoming Events</h1>
         </div>
         <div className="event_cards">
-          {/* {events.length >= 1 ? events.map((item, key) => (
-          <EventCard event={item} key={key} />
-        )) : <div style={{ fontStyle: "italic", fontSize: 'large' }}>No upcoming events</div>} */}
-         <EventCard showDetailsOnSmallScreens={true}/>
+          {events.length >= 1 ? events.map((item, key) => (
+          <EventCard event={item} key={key} showDetailsOnSmallScreens={true}/>
+        )) : <div style={{ fontStyle: "italic", fontSize: 'large' }}>No upcoming events</div>}
+         {/* <EventCard /> */}
         </div>
       </div>
     </div>

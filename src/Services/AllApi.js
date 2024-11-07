@@ -25,3 +25,8 @@ export const updateEventAPI=async(id,reqBody,reqHeader)=>{
 export const deleteEventAPI=async(id,reqHeader)=>{
     return await commonAPI("DELETE",`${SERVER_URL}/AdminRouter/deleteEvent/${id}`,{},reqHeader)
 }
+
+// fetchEvents
+export const fetchEventsAPI=async()=>{
+    return await commonAPI("GET",`${SERVER_URL}/UserRouter/fetchEvents`,"","")
+}
