@@ -30,3 +30,23 @@ export const deleteEventAPI=async(id,reqHeader)=>{
 export const fetchEventsAPI=async()=>{
     return await commonAPI("GET",`${SERVER_URL}/UserRouter/fetchEvents`,"","")
 }
+
+// Create Razorpay Order API
+export const createRazorpayOrderAPI = async (amount) => {
+    try {
+      const response = await commonAPI("POST", `${SERVER_URL}/UserRouter/create-order`, { amount }, ""); 
+       return response;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+  
+  // Verify Razorpay Payment API
+  export const verifyRazorpayPaymentAPI = async (paymentData) => {
+    try {
+      const response = await commonAPI("POST", `${SERVER_URL}/UserRouter/verify-payment`, paymentData, "");
+      return response;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };

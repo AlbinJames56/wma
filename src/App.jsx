@@ -22,6 +22,7 @@ import AdminHome from "./pages/adminPages/AdminHome";
 import EventPage from "./pages/userPages/EventPage/EventPage";
 import AdminLogin from "./pages/adminPages/AdminLogin";
 import { fetchEventsAPI } from "./Services/allApi";
+import EventRegister from "./pages/userPages/EventRegister/EventRegister";
 
 export const AppContext = createContext();
 function App() {
@@ -78,7 +79,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/event/:id" element={<DetailPage />} />
                 <Route path="/membership" element={<MemberReg />} />
-                <Route path="/register" element={<MemberReg />} />
+                <Route path="/register/:id" element={<EventRegister />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/committee" element={<CommitteePage />} />
