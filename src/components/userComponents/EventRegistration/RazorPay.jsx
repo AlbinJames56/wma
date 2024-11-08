@@ -44,10 +44,15 @@ const RazorpayPayment = ({ setThank, regData, setError }) => {
             // Step 3: Call verifyRazorpayPaymentAPI to verify payment
             const paymentData = {
               payment_id: response.razorpay_payment_id,
-              order_id: order.data.id,
-              signature: response.razorpay_signature,
+            order_id: order.data.id,
+            signature: response.razorpay_signature,
+            eventId: regData.event_id,
+            ticketType: regData.ticketType,
+            ticketCount: regData.ticketCount,
+            customerEmail: regData.email,
+            customerName: regData.fullName,
             };
-            // console.log("paymentData:",paymentData);
+            console.log("paymentData:",regData);
             
             const verificationResponse = await verifyRazorpayPaymentAPI(paymentData);
               if (verificationResponse.data.status === "success") {

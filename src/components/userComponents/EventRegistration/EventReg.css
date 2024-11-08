@@ -38,3 +38,24 @@
         margin-bottom: 20px;
     }
 }
+
+
+/* event thank */
+.thankContainer {
+    min-height: 100vh;
+}
+
+.thankButton {
+    padding: 7px 20px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+    border-radius: 10px;
+    background-image: linear-gradient(43deg, hsla(340, 100%, 76%, 1) 0%, hsla(269, 100%, 77%, 1) 100%);
+    border: none;
+}
+
+.thankButton:hover {
+    background-image: linear-gradient(43deg, hsla(340, 70%, 76%, 1) 0%, hsla(269, 80%, 77%, 1) 100%);
+    cursor: pointer;
+}

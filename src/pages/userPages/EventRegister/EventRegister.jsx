@@ -120,8 +120,7 @@ function EventRegister() {
                                     key={index}
                                     id="rg2-2"
                                     className="my-2 shadow-sm bg-white rounded align-items-center p-3"
-                                    
-                                >
+                                    >
                                     <Col xs={6} className="font-weight-bold">{pricing.name}</Col>
                                     <Col xs={3}>$ {pricing.price}</Col>
                                     <Col xs={2} className="d-flex align-items-center" id="rg2-3">

@@ -17,8 +17,7 @@ function EventRegForm({ event, setCheckOut, setBackPage, registrationData, setDa
   const [warning, setWarning] = useState("");
 
   const schema = yup.object().shape({
-    firstName: yup.string().required("Your First Name is Required!"),
-    lastName: yup.string().required("Your Last Name is Required!"),
+    fullName: yup.string().required("Name is Required!"), 
     country: yup.string().required("Please enter the country!"),
     phone: yup.string().required("Phone number is not valid!"),
     address: yup.string().required("Please provide your Address!"),
@@ -74,23 +73,13 @@ function EventRegForm({ event, setCheckOut, setBackPage, registrationData, setDa
       <Row className="form_part_one">
         <Col md={6}>
           <MDBInput
-            label="First Name"
-            {...register("firstName")}
+            label="Full Name"
+            {...register("fullName")}
             className="mb-3"
             size="lg"
           />
-          <div className="text-danger">{errors.firstName?.message}</div>
-        </Col>
-        <Col md={6}>
-          <MDBInput
-            label="Last Name"
-            {...register("lastName")}
-            className="mb-3"
-            size="lg"
-          />
-          <div className="text-danger">{errors.lastName?.message}</div>
-        </Col>
-
+          <div className="text-danger">{errors.fullName?.message}</div>
+        </Col> 
         <Col md={6}>
           <MDBInput
             label="Country"
