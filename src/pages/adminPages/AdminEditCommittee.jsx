@@ -1,56 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "../../assets/avatar.png";
 import AdminAddCommitte from "../../components/adminComponents/AdminAddCommittee/AdminAddCommitte";
 import DeleteIcon from "@mui/icons-material/Delete";  
+import { deleteCommitteeMemberAPPI, getCommitteeApi } from "../../Services/allApi";
 
 function AdminEditCommittee() {
-  const committee = [
-    {
-      name: "John Doe",
-      position: "President",
-      imageUrl: "https://nursinginstitutegoa.org/wp-content/uploads/2016/01/tutor-8.jpg",
-    },
-    {
-      name: "Alice Walker",
-      position: "Secretary",
-      imageUrl: "https://americanlibrariesmagazine.org/wp-content/uploads/2015/01/alicewalkerforweb2.jpg",
-    },
-    {
-      name: "Mathew Devasy",
-      position: "Treasurer",
-      imageUrl: "https://i1.sndcdn.com/avatars-000005942097-1jok5y-t240x240.jpg",
-    },
-    {
-      name: "Jameela",
-      position: "Vice President",
-      imageUrl: "",
-    },
-    {
-      name: "Maneesh",
-      position: "Joint Secretary",
-      imageUrl: "",
-    },
-    {
-      name: "Robert",
-      position: "Executive Member",
-      imageUrl: "",
-    },
-    {
-      name: "Ansari",
-      position: "Executive Member",
-      imageUrl: "",
-    },
-    {
-      name: "Muthabiq",
-      position: "Executive Member",
-      imageUrl: "",
-    },
-    {
-      name: "ALisha",
-      position: "Executive Member",
-      imageUrl: "",
-    },
-  ];
+  const [committee, setCommittee] = useState([]);
+  useEffect(() => {
+    const fetchCommitteeData = async () => {
+      try {
+        const response = await getCommitteeApi();
+        if (response.status === 200) {
+          setCommittee(response.data);
+        } else {
+          console.error("Failed to fetch committee members");
+        }
+      } catch (error) {
+        console.error("Error fetching committee data:", error);
+      }
+    };
+
+    fetchCommitteeData();
+  }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await deleteCommitteeMemberAPPI(id);
+      if (response.status === 200) {
+        setCommittee(committee.filter((member) => member._id !== id));
+      } else {
+        console.error("Failed to delete committee member");
+      }
+    } catch (error) {
+      console.error("Error deleting committee member:", error);
+    }
+  };
 
   const Committee = ({ item }) => {
     return (
@@ -59,7 +43,7 @@ function AdminEditCommittee() {
           <div className="col-3 ">
             <img
             width={80}
-              src={item.imageUrl ? item.imageUrl : Avatar}
+            src={item.file ? item.file : Avatar}
               alt="Profile"
               className="img-fluid rounded-circle"
             />
@@ -71,7 +55,7 @@ function AdminEditCommittee() {
             </div>
           </div>
           <div className="col-3 text-right">
-            <DeleteIcon style={{ color: "red", cursor: "pointer" }} />
+            <DeleteIcon onClick={() => handleDelete(item._id)}  style={{ color: "red", cursor: "pointer" }} />
           </div>
         </div>
       </div>
@@ -82,7 +66,7 @@ function AdminEditCommittee() {
     <>
     <h4 className="text-dark text-center" >Add/Edit Committee</h4>
       {committee.length !== 0 ? (
-        <div className="cards">
+        <div className="cards" >
           {committee.map((item, key) => (
             <Committee item={item} key={key} />
           ))}

@@ -1,34 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Image, Button, Modal } from "react-bootstrap";
-import DeleteIcon from "@mui/icons-material/Delete"; 
+import DeleteIcon from "@mui/icons-material/Delete";
 import AdminAddGallery from "../../components/adminComponents/AdminAddGallery";
+import { getGalleryImagesApi, deleteGalleryImageApi } from "../../Services/allAPI";
 
 function AdminGallery() {
-  const gallery = [
-    { original: "https://picsum.photos/id/1018/1000/600/" },
-    { original: "https://picsum.photos/id/1015/1000/600/" },
-    { original: "https://picsum.photos/id/1019/1000/600/" },
-    { original: "https://picsum.photos/id/1018/1000/600/" },
-    { original: "https://picsum.photos/id/1015/1000/600/" },
-    { original: "https://picsum.photos/id/1019/1000/600/" },
-  ];
-
+  const [gallery, setGallery] = useState([]);
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImageId, setSelectedImageId] = useState(null);
 
-  const openDeleteConfirmation = (image) => {
-    setSelectedImage(image);
+  useEffect(() => {
+    fetchGalleryImages();
+  }, []);
+
+  const fetchGalleryImages = async () => {
+    try {
+      const response = await getGalleryImagesApi();
+      if (response.status === 200) {
+        setGallery(response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching gallery images:", error);
+    }
+  };
+
+  const openDeleteConfirmation = (imageId) => {
+    setSelectedImageId(imageId);
     setShowConfirmation(true);
   };
 
   const closeDeleteConfirmation = () => {
     setShowConfirmation(false);
-    setSelectedImage(null);
+    setSelectedImageId(null);
   };
 
-  const deleteImage = () => {
-    console.log("Deleting image:", selectedImage);
-    closeDeleteConfirmation();
+  const deleteImage = async () => {
+    try {
+      if (selectedImageId) {
+        const response = await deleteGalleryImageApi(selectedImageId);
+        if (response.status === 200) {
+          setGallery(gallery.filter((image) => image._id !== selectedImageId));
+        }
+      }
+    } catch (error) {
+      console.error("Error deleting image:", error);
+    } finally {
+      closeDeleteConfirmation();
+    }
   };
 
   const GalleryCards = ({ item }) => (
@@ -37,7 +55,7 @@ function AdminGallery() {
         <Row className="d-flex align-items-center border p-2">
           <Col xs={12} className="d-flex justify-content-center">
             <Image
-              src={item.original || ""}
+              src={item.imageURL}
               alt="gallery_img"
               rounded
               fluid
@@ -45,7 +63,7 @@ function AdminGallery() {
             />
           </Col>
           <Col xs={12} className="d-flex justify-content-center mt-2">
-            <Button variant="danger" onClick={() => openDeleteConfirmation(item.original)}>
+            <Button variant="danger" onClick={() => openDeleteConfirmation(item._id)}>
               <DeleteIcon />
             </Button>
           </Col>
@@ -58,9 +76,11 @@ function AdminGallery() {
     <Container className="my-4">
       <h4 className="text-dark text-center">Gallery</h4>
       <Row>
-        {gallery.map((item, key) => (
-          <GalleryCards item={item} key={key} />
-        ))}
+        {gallery.length > 0 ? (
+          gallery.map((item, key) => <GalleryCards item={item} key={key} />)
+        ) : (
+          <p>No images found.</p>
+        )}
       </Row>
 
       {/* Gallery Add Image Component */}

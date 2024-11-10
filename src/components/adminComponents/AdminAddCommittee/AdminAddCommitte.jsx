@@ -4,6 +4,7 @@ import FileBase from "react-file-base64";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import './AdminAddCommittee.css'
+import { addCommitteeAPi } from "../../../Services/allApi";
 
 const AdminAddCommitte = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,18 +15,30 @@ const AdminAddCommitte = () => {
   });
   const [loading, setLoading] = useState(false);
   const [addError, setAddError] = useState("");
-  const [addCommittee, setAddCommittee] = useState(false);
-
+  const [addCommittee, setAddCommittee] = useState(false); 
   const togglePopup = () => setIsOpen(!isOpen);
 
   const handleChange = (e) => {
     setCommitteeData({ ...committeeData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    // Handle form submission logic here
     setLoading(true);
+    try{
+       const response=await addCommitteeAPi(committeeData);
+       if(response.status==201){
+        setAddCommittee(true);
+        togglePopup();
+        setCommitteeData({name:"",position:"President",file:""})
+       }else{
+        setAddError("Failed to add committee member. Please try again.");
+       }
+    }catch(err){
+      setAddError("An error occurred while adding the committee member.");
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <div>
@@ -85,6 +98,7 @@ const AdminAddCommitte = () => {
               <Form.Group controlId="formFile" className="mb-3">
                 <FileBase
                   type="file"
+                   accept="image/*"
                   multiple={false}
                   onDone={({ base64 }) =>
                     setCommitteeData({ ...committeeData, file: base64 })

@@ -53,3 +53,48 @@ export const createRazorpayOrderAPI = async (amount) => {
 // Export updateTicketCount
  export const updateTicketCountAPI = async (paymentData) => { 
   return await commonAPI("PUT", `${SERVER_URL}/UserRouter/update-ticket-count`, paymentData, ""); };
+
+
+  // get BookedTciekts for admin
+  export const getBookedTicketsAPI=async ()=>{
+    return await commonAPI("GET",`${SERVER_URL}/AdminRouter/get-booked-tickets`,"","")
+  }
+
+  // admin add committee
+  export const addCommitteeAPi=async(committeeData)=>{
+    try {
+      const response = await commonAPI("POST", `${SERVER_URL}/AdminRouter/addCommittee`, committeeData);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+  // get committee members
+export const getCommitteeApi = async () => {
+  return await commonAPI("GET", `${SERVER_URL}/AdminRouter/getCommittee`);
+};
+
+ // admin add  GalleryImageApi
+ export const addGalleryImageAPI=async(imageURL)=>{
+  try {
+    const response = await commonAPI("POST",`${SERVER_URL}/AdminRouter/addImage`, imageURL);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+// delete committee member 
+export const deleteCommitteeMemberAPPI = async (id) => {
+  return await commonAPI("DELETE", `${SERVER_URL}/AdminRouter/delete/${id}`);
+};
+
+// get gallery images
+export const getGalleryImagesApi = async () => {
+  return await commonAPI("GET", `${SERVER_URL}/AdminRouter/getImages`);
+};
+
+// delete gallery images
+export const deleteGalleryImageApi = async (id) => {
+  return await commonAPI("DELETE", `${SERVER_URL}/AdminRouter/deleteImage/${id}`);
+};
+

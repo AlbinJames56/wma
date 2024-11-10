@@ -65,6 +65,7 @@ const RazorpayPayment = ({ setThank, regData, setError }) => {
               if (UpdateTicketResponse.status == 200) {
                 console.log("Count Updated successfully");
                 toast.success("Payment successful");
+                setError(null);
                 setThank(true); // Show thank you message after payment
               } else {
                 console.log("Error while updating", UpdateTicketResponse);
