@@ -42,6 +42,7 @@ function AdminEventForm({
   const [ticketType, setTicketType] = useState({
     name: "",
     description: "",
+    ticketCount:"",
     categories: [],
   });
   const [categoryInputs, setCategoryInputs] = useState([
@@ -80,7 +81,7 @@ function AdminEventForm({
     }));
 
     // Clear inputs and close modal
-    setTicketType({ name: "", description: "", categories: [] });
+    setTicketType({ name: "", description: "",ticketCount:"", categories: [] });
     setCategoryInputs([{ name: "", price: "" }]);
     setShowTicketModal(false);
   };
@@ -457,6 +458,7 @@ function AdminEventForm({
                     <div>
                       <Card.Title>{type.name}</Card.Title>
                       <Card.Text>{type.description}</Card.Text>
+                      <Card.Text>Total Number of tickets: {type.ticketCount}</Card.Text>
                       <h6>Categories:</h6>
                       <ul>
                         {type.categories.map((cat, idx) => (
@@ -504,6 +506,16 @@ function AdminEventForm({
               value={ticketType.name}
               onChange={(e) =>
                 setTicketType({ ...ticketType, name: e.target.value })
+              }
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Ticket Count</Form.Label>
+            <Form.Control
+              type="text"
+              value={ticketType.ticketCount}
+              onChange={(e) =>
+                setTicketType({ ...ticketType, ticketCount: e.target.value })
               }
             />
           </Form.Group>

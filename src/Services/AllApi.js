@@ -50,3 +50,6 @@ export const createRazorpayOrderAPI = async (amount) => {
       throw new Error(error.message);
     }
   };
+// Export updateTicketCount
+ export const updateTicketCountAPI = async (paymentData) => { 
+  return await commonAPI("PUT", `${SERVER_URL}/UserRouter/update-ticket-count`, paymentData, ""); };

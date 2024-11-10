@@ -106,6 +106,12 @@ console.log(`${SERVER_URL}/uploads/${viewEvent?.eventPoster}`);
                           <span>{ticket.description}</span>
                         </Col>
                       </Row>
+                      <Row>
+                        <Col>
+                          <strong>Ticket Count:</strong>{" "}
+                          <span>{ticket.ticketCount}</span>
+                        </Col>
+                      </Row>
                       <strong>Pricing:</strong>
                       {ticket?.pricing?.map((pricing, ind) => (
                         <Row key={ind} className="mt-1">

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import {
   createRazorpayOrderAPI,
+  updateTicketCountAPI,
   verifyRazorpayPaymentAPI,
 } from "../../../Services/AllApi"; // Adjust the path accordingly
 import logo from "../../../assets/logo-bgremoved.png";
@@ -24,7 +25,7 @@ const RazorpayPayment = ({ setThank, regData, setError }) => {
   const handleRazorpayPayment = async () => {
     try {
       // Step 1: Call your backend to create the Razorpay order
-      const order = await createRazorpayOrderAPI(regData.subTotal); // Pass amount from regData to backend API 
+      const order = await createRazorpayOrderAPI(regData.subTotal); // Pass amount from regData to backend API
 
       if (!order.data.id) {
         throw new Error("Order creation failed");
@@ -44,20 +45,30 @@ const RazorpayPayment = ({ setThank, regData, setError }) => {
             // Step 3: Call verifyRazorpayPaymentAPI to verify payment
             const paymentData = {
               payment_id: response.razorpay_payment_id,
-            order_id: order.data.id,
-            signature: response.razorpay_signature,
-            eventId: regData.event_id,
-            ticketType: regData.ticketType,
-            ticketCount: regData.ticketCount,
-            customerEmail: regData.email,
-            customerName: regData.fullName,
+              order_id: order.data.id,
+              signature: response.razorpay_signature,
+              eventId: regData.event_id,
+              ticketType: regData.ticketType,
+              ticketCount: regData.ticketCount,
+              customerEmail: regData.email,
+              customerName: regData.fullName,
             };
-            console.log("paymentData:",regData);
-            
-            const verificationResponse = await verifyRazorpayPaymentAPI(paymentData);
-              if (verificationResponse.data.status === "success") {
-              toast.success("Payment successful");
-              setThank(true); // Show thank you message after payment
+            // console.log("paymentData:", regData);
+
+            const verificationResponse = await verifyRazorpayPaymentAPI(
+              paymentData
+            );
+            if (verificationResponse.data.status === "success") {
+              const UpdateTicketResponse = await updateTicketCountAPI(
+                paymentData
+              );
+              if (UpdateTicketResponse.status == 200) {
+                console.log("Count Updated successfully");
+                toast.success("Payment successful");
+                setThank(true); // Show thank you message after payment
+              } else {
+                console.log("Error while updating", UpdateTicketResponse);
+              }
             } else {
               alert("Payment verification failed");
               setError("Verification failed");
@@ -67,7 +78,7 @@ const RazorpayPayment = ({ setThank, regData, setError }) => {
             alert("Payment verification failed");
             setError(error.message);
           }
-        }, // <-- Add a comma here
+        },  
         prefill: {
           name: regData.name,
           email: regData.email,
@@ -77,7 +88,7 @@ const RazorpayPayment = ({ setThank, regData, setError }) => {
           color: "#F37254",
         },
       };
-      
+
       const rzp1 = new window.Razorpay(options);
       rzp1.open();
     } catch (error) {
