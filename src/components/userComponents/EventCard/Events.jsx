@@ -12,7 +12,7 @@ function Events() {
         <div className="event_head">
           <h1 className="text-center text-info">Upcoming Events</h1>
         </div>
-        <div className="event-scroll-container event_cards">
+        <div className="event-scroll-container event_cards d-flex justify-content-center">
           {events.length >= 1 ? (
             events.map((item, key) => <EventCard event={item} key={key} />)
           ) : (

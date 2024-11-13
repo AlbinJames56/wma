@@ -1,56 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './CommittePage.css'
 import Committee from '../../../components/userComponents/Committee/Committe';
-// const [committee, setCommittee] = useState( [])
-const committee=[
-  {
-    name: 'John Doe',
-    position: 'President',
-    file: 'https://nursinginstitutegoa.org/wp-content/uploads/2016/01/tutor-8.jpg',
-  },
-  {
-    name: 'Alice Walker',
-    position: 'Secretary',
-    file: 'https://americanlibrariesmagazine.org/wp-content/uploads/2015/01/alicewalkerforweb2.jpg',
-  },
-  {
-    name: 'Mathew Devasy',
-    position: 'Treasurer',
-    file: 'https://i1.sndcdn.com/avatars-000005942097-1jok5y-t240x240.jpg',
-  },
-  {
-    name: 'Jameela',
-    position: 'Vice President',
-    file: '',
-  },
-  {
-    name: 'Maneesh',
-    position: 'Joint Secretary',
-    file: '',
-  },
-  {
-    name: 'Robert',
-    position: 'Executive Member',
-    file: '',
-  },
-  {
-    name: 'Ansari',
-    position: 'Executive Member',
-    file: '',
-  },
-  {
-    name: 'Muthabiq',
-    position: 'Executive Member',
-    file: '',
-  },
-  {
-    name: 'ALisha',
-    position: 'Executive Member',
-    file: '',
-  },
-]
+import { getCommitteeApi } from '../../../Services/allApi';
+ 
+function CommitteePage() {   
+const [committee, setCommittee] = useState([]);
+  useEffect(() => {
+    const fetchCommitteeData = async () => {
+      try {
+        const response = await getCommitteeApi();
+        console.log(response);
+        
+        if (response.status === 200) {
+          setCommittee(response.data);
+        } else {
+          console.error("Failed to fetch committee members");
+        }
+      } catch (error) {
+        console.error("Error fetching committee data:", error);
+      }
+    };
 
-function CommitteePage() {
+    fetchCommitteeData();
+  }, []);
+
+
+
   return (  
        <div className="d-flex flex-column align-items-center justify-content-center mt-5 commity-bg">
           {committee.length !== 0 && (

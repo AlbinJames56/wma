@@ -98,11 +98,15 @@ const AdminAddCommitte = () => {
               <Form.Group controlId="formFile" className="mb-3">
                 <FileBase
                   type="file"
-                   accept="image/*"
+                   
                   multiple={false}
-                  onDone={({ base64 }) =>
-                    setCommitteeData({ ...committeeData, file: base64 })
-                  }
+                  onDone={({ base64, type }) => {
+                    if (["image/jpeg", "image/jpg", "image/png"].includes(type)) {
+                      setCommitteeData({ ...committeeData, file: base64 });
+                    } else {
+                      alert("Please upload a JPG, JPEG, or PNG file.");
+                    }
+                  }}
                 />
                 {committeeData.file && (
                   <img

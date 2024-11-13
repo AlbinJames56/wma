@@ -49,6 +49,7 @@ const AdminEvents = ({
       }
     }
   };
+  
   return (
     <>
       <Card className="mb-3 shadow-sm">

@@ -4,7 +4,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import CircularProgress from "@mui/material/CircularProgress";
 import Backdrop from "@mui/material/Backdrop";
-import FileBase from "react-file-base64"; 
+import FileBase from "react-file-base64";
 import { addGalleryImageAPI } from "../../Services/allApi";
 
 const AdminAddGallery = () => {
@@ -81,8 +81,13 @@ const AdminAddGallery = () => {
             <Form.Group controlId="formFile" className="mb-3">
               <FileBase
                 type="file"
-                accept="image/*"
-                onDone={({ base64 }) => setImageURL(base64)}
+                onDone={({ base64, type }) => {
+                  if (["image/jpeg", "image/jpg", "image/png"].includes(type)) {
+                    setImageURL(base64);
+                  } else {
+                    alert("Please upload a JPG, JPEG, or PNG file.");
+                  }
+                }}
               />
               {imageURL && (
                 <img

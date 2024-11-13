@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify"; 
+import React, { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import moment from "moment";
 
 import {
@@ -12,9 +12,10 @@ import {
   Image,
   CloseButton,
   Modal,
-} from "react-bootstrap";
-import { addEventAPI, updateEventAPI } from "../../../Services/allApi";
+} from "react-bootstrap";  
 import { SERVER_URL } from "../../../Services/ServerUrl";
+import { addEventAPI, updateEventAPI } from "../../../Services/AllApi";
+import { addEventContextResponse, editEventContextResponse } from "../../../ContextAPI/ContextShare";
 
 function AdminEventForm({
   currentId,
@@ -42,12 +43,15 @@ function AdminEventForm({
   const [ticketType, setTicketType] = useState({
     name: "",
     description: "",
-    ticketCount:"",
+    ticketCount: "",
     categories: [],
   });
   const [categoryInputs, setCategoryInputs] = useState([
     { name: "", price: "" },
   ]);
+  // context to update realtime
+  const {editEventResponse, setEditEventResponse}= useContext(editEventContextResponse);
+  const {addEventResponse, setAddEventResponse}= useContext(addEventContextResponse);
 
   // Function to add a new category input
   const addCategoryInput = () => {
@@ -81,7 +85,12 @@ function AdminEventForm({
     }));
 
     // Clear inputs and close modal
-    setTicketType({ name: "", description: "",ticketCount:"", categories: [] });
+    setTicketType({
+      name: "",
+      description: "",
+      ticketCount: "",
+      categories: [],
+    });
     setCategoryInputs([{ name: "", price: "" }]);
     setShowTicketModal(false);
   };
@@ -134,7 +143,7 @@ function AdminEventForm({
     } else {
       setIsEditing(false);
     }
-  }, [currentId, events]); 
+  }, [currentId, events]);
 
   // function to choose whether it is add or update
   const handleSubmit = async (e) => {
@@ -156,6 +165,7 @@ function AdminEventForm({
           const result = await addEventAPI(reqBody, reqHeader);
           if (result.status === 200) {
             toast.success("Event added successfully");
+            setAddEventResponse(result)
             clearSubmit();
           } else {
             toast.error("Not Able to Add");
@@ -182,6 +192,7 @@ function AdminEventForm({
           const result = await updateEventAPI(currentId, reqBody, reqHeader);
           if (result.status === 200) {
             toast.success("Event updated successfully");
+            setEditEventResponse(result)
             clearSubmit();
           } else {
             toast.error("Not Able to Update");
@@ -195,10 +206,16 @@ function AdminEventForm({
     }
   };
 
+  // file handling
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    setEvent({ ...event, file: selectedFile });
+    if (selectedFile && ["image/jpeg", "image/jpg", "image/png"].includes(selectedFile.type)) {
+      setEvent({ ...event, file: selectedFile });
+    } else {
+      alert("Please upload a file in JPG, JPEG, or PNG format.");
+    }
   };
+//  create form-data for uploading upload content
   const createFormData = () => {
     const {
       title,
@@ -231,7 +248,7 @@ function AdminEventForm({
     reqBody.append("regOpen", regOpen);
     return reqBody;
   };
-
+// validate form
   const validateForm = () => {
     const {
       title,
@@ -262,7 +279,7 @@ function AdminEventForm({
     }
     return true;
   };
-
+ // clear the form data after submission
   const clearSubmit = () => {
     setEvent({
       title: "",
@@ -417,10 +434,10 @@ function AdminEventForm({
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Poster</Form.Label>
+          <Form.Label>Poster (preferred dimensions 1600*1200  for better experience) </Form.Label>
           <Form.Control
-            type="file"
-            accept="image/*"
+            type="file" 
+            accept=".jpg, .jpeg, .png"
             onChange={handleFileChange}
           />
           {preview && (
@@ -458,7 +475,9 @@ function AdminEventForm({
                     <div>
                       <Card.Title>{type.name}</Card.Title>
                       <Card.Text>{type.description}</Card.Text>
-                      <Card.Text>Total Number of tickets: {type.ticketCount}</Card.Text>
+                      <Card.Text>
+                        Total Number of tickets: {type.ticketCount}
+                      </Card.Text>
                       <h6>Categories:</h6>
                       <ul>
                         {type.categories.map((cat, idx) => (

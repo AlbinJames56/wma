@@ -4,7 +4,7 @@ import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "react-toastify/dist/ReactToastify.css";
 
-import { Route, Router, Routes } from "react-router-dom";
+import { Route, Router, Routes, useNavigate } from "react-router-dom";
 import { createContext, useEffect, useState } from "react";
 import { ToastContainer, Bounce } from "react-toastify";
 
@@ -26,6 +26,7 @@ import EventRegister from "./pages/userPages/EventRegister/EventRegister";
 
 export const AppContext = createContext();
 function App() {
+  const Navigate=useNavigate()
   const [adminPage, setAdminPage] = useState(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [events, setEvents] = useState([]);
@@ -85,6 +86,7 @@ function App() {
                 <Route path="/committee"    element={<CommitteePage />} />
                 <Route path="/eventPage"    element={<EventPage />} />
                 <Route path="/gallery"      element={<Gallery />} />
+                <Route path='/*'            element={<Navigate to={'/'}/>}/>
               </Routes>
             </div>
             <Footer />

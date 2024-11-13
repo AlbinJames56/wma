@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Container, Row, Col, Button, Modal } from "react-bootstrap";
 import AddIcon from "@mui/icons-material/Add";
 import AdminEvents from "../../components/adminComponents/adminEvents/AdminEvents";
 import AdminEventView from "../../components/adminComponents/adminEvents/AdminEventView";
 import AdminEventForm from "../../components/adminComponents/adminEvents/AdminEventForm";
 import { getEventsAPI } from "../../Services/allApi";
+import { addEventContextResponse, editEventContextResponse } from "../../ContextAPI/ContextShare";
 
 function AdminEventPage() {
   const [events, setEvents] = useState([]);
   const [currentId, setCurrentId] = useState(null);
   const [addEvent, setAddEvent] = useState(false);
   const [viewEvent, setViewEvent] = useState(false);
+  const {editEventResponse, setEditEventResponse}=   useContext (editEventContextResponse);
+  const {addEventResponse, setAddEventResponse}=   useContext (addEventContextResponse);
 
   // Get events from database
   const getEvents = async () => {
@@ -29,7 +32,7 @@ function AdminEventPage() {
   
   useEffect(()=>{
     getEvents()
-  },[])
+  },[editEventResponse,addEventResponse])
 
   return (
     <Container fluid style={{ marginTop: "90px", padding: "10px" }}>

@@ -1,15 +1,20 @@
 import React, { createContext, useState } from "react";
-export const deleteEventContextResponse = createContext();
+export const addEventContextResponse = createContext();
+export const editEventContextResponse = createContext();
 function ContextShare({ children }) {
-  const [deleteEventResponse, setDeleteEventResponse] = useState
-  ("");
+  const [addEventResponse, setAddEventResponse] = useState("");
+  const [editEventResponse, setEditEventResponse] = useState("");
   return (
     <>
-      <deleteEventContextResponse.Provider
-        value={{ deleteEventResponse, setDeleteEventResponse }}
+      <addEventContextResponse.Provider
+        value={{ addEventResponse, setAddEventResponse }}
       >
-        {children}
-      </deleteEventContextResponse.Provider>
+        <editEventContextResponse.Provider
+          value={{ editEventResponse, setEditEventResponse }}
+        >
+          {children}
+        </editEventContextResponse.Provider>
+      </addEventContextResponse.Provider>
     </>
   );
 }

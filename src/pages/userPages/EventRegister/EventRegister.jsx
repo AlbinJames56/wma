@@ -112,11 +112,11 @@ function EventRegister() {
                     <div>
                       <strong>{ticket.name}</strong>
                       {parseInt(ticket.ticketCount) < 10 && (
-                        <p className="text-danger">Only a few tickets left!</p>
+                        <p className="text-danger">Only {ticket.ticketCount} tickets left!</p>
                       )}
                       <p>{ticket.description}</p>
                       <p>
-                        {findMinAmount(ticket.categories)}$ -{" "}
+                        {findMinAmount(ticket.categories)}$ -
                         {findMaxAmount(ticket.categories)}$
                       </p>
                     </div>
