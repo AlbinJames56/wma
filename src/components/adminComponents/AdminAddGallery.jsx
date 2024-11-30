@@ -5,7 +5,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import CircularProgress from "@mui/material/CircularProgress";
 import Backdrop from "@mui/material/Backdrop";
 import FileBase from "react-file-base64";
-import { addGalleryImageAPI } from "../../Services/allApi";
+import { addGalleryImageAPI } from "../../Services/AllApis";
 import { addGalleryContextResponse } from "../../ContextAPI/ContextShare";
 
 const AdminAddGallery = () => {

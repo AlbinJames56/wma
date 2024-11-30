@@ -14,7 +14,7 @@ import {
   Modal,
 } from "react-bootstrap";  
 import { SERVER_URL } from "../../../Services/ServerUrl";
-import { addEventAPI, updateEventAPI } from "../../../Services/allApi";
+import { addEventAPI, updateEventAPI } from "../../../Services/AllApis";
 import { addEventContextResponse, editEventContextResponse } from "../../../ContextAPI/ContextShare";
 
 function AdminEventForm({

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Avatar from "../../assets/avatar.png";
 import AdminAddCommitte from "../../components/adminComponents/AdminAddCommittee/AdminAddCommitte";
 import DeleteIcon from "@mui/icons-material/Delete";  
-import { deleteCommitteeMemberAPPI, getCommitteeApi } from "../../Services/allApi";
+import { deleteCommitteeMemberAPPI, getCommitteeApi } from "../../Services/AllApis";
 
 function AdminEditCommittee() {
   const [committee, setCommittee] = useState([]);

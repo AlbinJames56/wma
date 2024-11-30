@@ -4,7 +4,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { Card, Modal, Button, Image } from "react-bootstrap";
 import { SERVER_URL } from "../../../Services/ServerUrl";
-import { deleteEventAPI } from "../../../Services/allApi";
+import { deleteEventAPI } from "../../../Services/AllApis";
 import { toast } from "react-toastify"; 
 const AdminEvents = ({
   events,

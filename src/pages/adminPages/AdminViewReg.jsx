@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Table, Row, Col, Spinner, Alert } from "react-bootstrap";
-import { getBookedTicketsAPI } from "../../Services/allApi";
+import { getBookedTicketsAPI } from "../../Services/AllApis";
 
 function AdminViewReg() {
   const [bookedTickets, setBookedTickets] = useState([]);

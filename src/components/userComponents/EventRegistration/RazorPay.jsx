@@ -3,7 +3,7 @@ import {
   createRazorpayOrderAPI,
   updateTicketCountAPI,
   verifyRazorpayPaymentAPI,
-} from "../../../Services/allApi"; // Adjust the path accordingly
+} from "../../../Services/AllApis";  
 import logo from "../../../assets/logo-bgremoved.png";
 import { toast } from "react-toastify";
 
@@ -12,13 +12,12 @@ const RazorpayPayment = ({ setThank, regData, setError }) => {
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
     script.async = true;
-    script.onload = () => {
-      // Razorpay script loaded successfully
+    script.onload = () => { 
     };
     document.body.appendChild(script);
 
     return () => {
-      document.body.removeChild(script); // Clean up script when component unmounts
+      document.body.removeChild(script);  unmounts
     };
   }, []);
 

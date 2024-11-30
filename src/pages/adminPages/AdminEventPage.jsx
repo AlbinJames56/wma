@@ -4,7 +4,7 @@ import AddIcon from "@mui/icons-material/Add";
 import AdminEvents from "../../components/adminComponents/adminEvents/AdminEvents";
 import AdminEventView from "../../components/adminComponents/adminEvents/AdminEventView";
 import AdminEventForm from "../../components/adminComponents/adminEvents/AdminEventForm";
-import { getEventsAPI } from "../../Services/allApi";
+import { getEventsAPI } from "../../Services/AllApis";
 import { addEventContextResponse, editEventContextResponse } from "../../ContextAPI/ContextShare";
 
 function AdminEventPage() {
