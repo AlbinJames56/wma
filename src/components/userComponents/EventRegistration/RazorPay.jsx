@@ -3,7 +3,7 @@ import {
   createRazorpayOrderAPI,
   updateTicketCountAPI,
   verifyRazorpayPaymentAPI,
-} from "../../../Services/AllApi"; // Adjust the path accordingly
+} from "../../../Services/allApi"; // Adjust the path accordingly
 import logo from "../../../assets/logo-bgremoved.png";
 import { toast } from "react-toastify";
 
