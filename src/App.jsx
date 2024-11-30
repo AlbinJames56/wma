@@ -22,7 +22,7 @@ import AdminHome from "./pages/adminPages/AdminHome";
 import EventPage from "./pages/userPages/EventPage/EventPage";
 import AdminLogin from "./pages/adminPages/AdminLogin"; 
 import EventRegister from "./pages/userPages/EventRegister/EventRegister";
-import { fetchEventsAPI } from "./Services/AllApis";
+import { fetchEventsAPI } from "./Services/allApi";
 
 export const AppContext = createContext();
 function App() {

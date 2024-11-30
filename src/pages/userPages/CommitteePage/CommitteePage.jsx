@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './CommittePage.css'
 import Committee from '../../../components/userComponents/Committee/Committe';
-import { getCommitteeApi } from '../../../Services/AllApis';
+import { getCommitteeApi } from '../../../Services/allApi';
  
 function CommitteePage() {   
 const [committee, setCommittee] = useState([]);

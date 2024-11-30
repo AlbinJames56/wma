@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MDBBtn, MDBContainer, MDBInput } from "mdb-react-ui-kit";
-import { adminLogin } from "../../Services/AllApis";
+import { adminLogin } from "../../Services/allApi";
 import { Flip, toast } from "react-toastify"; 
 function AdminLogin({ setIsLoggedIn }) {
  

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Container, Row, Col, Image, Button, Modal } from "react-bootstrap";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AdminAddGallery from "../../components/adminComponents/AdminAddGallery"; 
-import { getGalleryImagesApi, deleteGalleryImageApi } from "../../Services/AllApis"
+import { getGalleryImagesApi, deleteGalleryImageApi } from "../../Services/allApi"
 import { addGalleryContextResponse } from "../../ContextAPI/ContextShare";
 
 function AdminGallery() {

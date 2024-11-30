@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "./GallerySlide.css";
 import { MDBCarousel, MDBCarouselItem } from "mdb-react-ui-kit";
 import { addGalleryContextResponse } from "../../../ContextAPI/ContextShare";
-import { getGalleryImagesApi } from "../../../Services/AllApis";
+import { getGalleryImagesApi } from "../../../Services/allApi";
 
 function GallerySlide() {
   const { addGalleryResponse } = useContext(addGalleryContextResponse);

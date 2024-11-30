@@ -4,7 +4,7 @@ import FileBase from "react-file-base64";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import './AdminAddCommittee.css'
-import { addCommitteeAPi } from "../../../Services/AllApis";
+import { addCommitteeAPi } from "../../../Services/allApi";
 
 const AdminAddCommitte = () => {
   const [isOpen, setIsOpen] = useState(false);

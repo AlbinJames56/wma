@@ -6,7 +6,7 @@ import {
   IoIosArrowDropleftCircle,
 } from "react-icons/io";
 import { addGalleryContextResponse } from "../../../ContextAPI/ContextShare";
-import { getGalleryImagesApi } from "../../../Services/AllApis";
+import { getGalleryImagesApi } from "../../../Services/allApi";
 function Gallery() {
   const { addGalleryResponse, setAddGalleryResponse } = useContext(
     addGalleryContextResponse
