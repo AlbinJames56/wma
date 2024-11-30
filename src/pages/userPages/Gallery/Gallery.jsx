@@ -1,23 +1,34 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
-import {IoIosArrowDroprightCircle,IoIosArrowDropleftCircle} from "react-icons/io";
+import {
+  IoIosArrowDroprightCircle,
+  IoIosArrowDropleftCircle,
+} from "react-icons/io";
+import { addGalleryContextResponse } from "../../../ContextAPI/ContextShare";
+import { getGalleryImagesApi } from "../../../Services/allApi";
 function Gallery() {
-  const images = [
-    {
-      original: "https://picsum.photos/id/1018/1000/600/",
-      thumbnail: "https://picsum.photos/id/1018/250/150/",
-    },
-    {
-      original: "https://picsum.photos/id/1015/1000/600/",
-      thumbnail: "https://picsum.photos/id/1015/250/150/",
-    },
-    {
-      original: "https://picsum.photos/id/1019/1000/600/",
-      thumbnail: "https://picsum.photos/id/1019/250/150/",
-    },
-  ];
-
+  const { addGalleryResponse, setAddGalleryResponse } = useContext(
+    addGalleryContextResponse
+  );
+  const [images, setImages] = useState([]);
+  // fetching images from database
+  const fetchGalleryImages = async () => {
+    try {
+      const response = await getGalleryImagesApi();
+      if (response.status === 200) {
+        console.log(response.data);
+        setImages(response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching gallery images:", error);
+    }
+  };
+  // console.log(images);
+  
+  useEffect(() => {
+    fetchGalleryImages();
+  }, [addGalleryResponse]);
   const getThumbnailWidth = () => {
     const windowWidth = window.innerWidth;
     if (windowWidth <= 767) {
@@ -44,11 +55,19 @@ function Gallery() {
   const renderLeftNav = (onClick, disabled) => (
     <button
       className="image-gallery-custom-nav"
-      style={{ position: "absolute", top: "50%", left: "0", transform: "translateY(-50%)", zIndex: 1,border:"none",  background:"transparent" }}
+      style={{
+        position: "absolute",
+        top: "50%",
+        left: "0",
+        transform: "translateY(-50%)",
+        zIndex: 1,
+        border: "none",
+        background: "transparent",
+      }}
       onClick={onClick}
       disabled={disabled}
     >
-      < IoIosArrowDropleftCircle  size={30}   />
+      <IoIosArrowDropleftCircle size={30} />
     </button>
   );
 
@@ -56,25 +75,39 @@ function Gallery() {
   const renderRightNav = (onClick, disabled) => (
     <button
       className="image-gallery-custom-nav"
-      style={{ position: "absolute", top: "50%", right: "0", transform: "translateY(-50%)", zIndex: 1, border:"none",  background:"transparent"}}
+      style={{
+        position: "absolute",
+        top: "50%",
+        right: "0",
+        transform: "translateY(-50%)",
+        zIndex: 1,
+        border: "none",
+        background: "transparent",
+      }}
       onClick={onClick}
       disabled={disabled}
     >
-      <IoIosArrowDroprightCircle  size={30}   />
+      <IoIosArrowDroprightCircle size={30} />
     </button>
   );
 
   return (
-    <div className="container" style={{ marginTop: "150px", marginBottom: "50px" }}>
+    <div
+      className="container"
+      style={{ marginTop: "150px", marginBottom: "50px" }}
+    >
       <div className="row justify-content-center">
         <div className="col-12">
           <ImageGallery
             items={images}
             thumbnailWidth={getThumbnailWidth()}
             renderItem={(item) => (
-              <div className="d-flex justify-content-center" style={{ height: "70vh" }}>
+              <div
+                className="d-flex justify-content-center"
+                style={{ height: "70vh" }}
+              >
                 <img
-                  src={item.original}
+                  src={item.imageURL}
                   alt={item.originalAlt}
                   width={getOriginalImageWidth()}
                   className="img-fluid"

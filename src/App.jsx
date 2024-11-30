@@ -20,9 +20,9 @@ import About from "./components/userComponents/About/About";
 import AdminNavbar from "./components/adminComponents/AdminNav/AdminNavbar";
 import AdminHome from "./pages/adminPages/AdminHome";
 import EventPage from "./pages/userPages/EventPage/EventPage";
-import AdminLogin from "./pages/adminPages/AdminLogin";
-import {fetchEventsAPI} from "./Services/AllApi";
+import AdminLogin from "./pages/adminPages/AdminLogin"; 
 import EventRegister from "./pages/userPages/EventRegister/EventRegister";
+import { fetchEventsAPI } from "./Services/allApi";
 
 export const AppContext = createContext();
 function App() {

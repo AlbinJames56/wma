@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Container, Row, Col, Image, Button, Modal } from "react-bootstrap";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AdminAddGallery from "../../components/adminComponents/AdminAddGallery";
-import { getGalleryImagesApi, deleteGalleryImageApi } from "../../Services/allAPI";
+import AdminAddGallery from "../../components/adminComponents/AdminAddGallery"; 
+import { getGalleryImagesApi, deleteGalleryImageApi } from "../../Services/AllApi"
+import { addGalleryContextResponse } from "../../ContextAPI/ContextShare";
 
 function AdminGallery() {
   const [gallery, setGallery] = useState([]);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [selectedImageId, setSelectedImageId] = useState(null);
-
+const  {addGalleryResponse,setAddGalleryResponse }=useContext(addGalleryContextResponse)
   useEffect(() => {
     fetchGalleryImages();
-  }, []);
+  }, [addGalleryResponse]);
 
   const fetchGalleryImages = async () => {
     try {

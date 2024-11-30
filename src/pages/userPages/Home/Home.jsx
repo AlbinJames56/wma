@@ -8,6 +8,7 @@ import Partners from "../../../components/userComponents/Partners";
 import GallerySlide from "../../../components/userComponents/GallerySlider/GallerySlide";
 import './Home.css'
 function Home() {
+  
   return (
     <div>
       <section id="banner">

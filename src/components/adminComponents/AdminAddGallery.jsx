@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
@@ -6,6 +6,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Backdrop from "@mui/material/Backdrop";
 import FileBase from "react-file-base64";
 import { addGalleryImageAPI } from "../../Services/allApi";
+import { addGalleryContextResponse } from "../../ContextAPI/ContextShare";
 
 const AdminAddGallery = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +14,7 @@ const AdminAddGallery = () => {
   const [loading, setLoading] = useState(false);
   const [addError, setAddError] = useState(null);
 
+  const  {addGalleryResponse,setAddGalleryResponse }=useContext(addGalleryContextResponse)
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!imageURL) {
@@ -29,6 +31,7 @@ const AdminAddGallery = () => {
         console.log("Image Uploaded:", response.data);
         setIsOpen(false); // Close the popup after the image is successfully uploaded
         setImageURL(""); // Reset the image field
+        setAddGalleryResponse(response)
       } else {
         setAddError("Failed to upload image. Please try again.");
       }
