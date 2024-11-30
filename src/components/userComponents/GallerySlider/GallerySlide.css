@@ -10,12 +10,14 @@
   
   .gallery img { 
     width: 50rem;
+    height: 30rem;
     margin: 0 auto;
     border: 5px solid rgba(255, 255, 255, 0.8); /* Add thematic border */
   }
   @media (max-width: 768px) {
     .gallery img { 
       width: 20rem;
+      height: 15rem;
     }
     .gallery{
       margin-top: -60px;
