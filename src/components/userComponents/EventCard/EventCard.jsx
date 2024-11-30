@@ -9,20 +9,20 @@ function EventCard({ showDetailsOnSmallScreens = false, event }) {
   const navigate = useNavigate();
 
   const handleView = (e) => {
-    e.stopPropagation(); // Prevents the click from also triggering the handleCardClick on large screens
+    e.stopPropagation();  
     navigate(`/event/${encodeURIComponent(event._id)}`);
   };
 
-  const handleCardClick = () => {
+  const handleCardClick = (e) => {
+    e.stopPropagation(); 
     if (window.innerWidth <= 480) {
-      handleView();
+      navigate(`/event/${encodeURIComponent(event._id)}`);
     }
   };
 
   return (
-    <div className="event-card-container" >
+    <div className="event-card-container">
       <Card
-        
         className="m-3 event-card"
         onClick={handleCardClick}
       >
